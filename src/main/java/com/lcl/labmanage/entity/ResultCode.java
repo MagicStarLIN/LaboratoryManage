@@ -1,8 +1,9 @@
 package com.lcl.labmanage.entity;
 
 public enum ResultCode {
-    SUCCESS(200, "成功"),
-    REPEAT_NAME(401, "用户名重复")
+    SUCCESS(0, "成功"),
+    REPEAT_NAME(401, "用户名重复"),
+    USER_ABSENCE(402, "用户不存在"),
     ;
 
 

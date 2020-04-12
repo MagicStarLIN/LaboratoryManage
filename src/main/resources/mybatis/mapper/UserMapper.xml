@@ -11,4 +11,7 @@
         select * from user where username = #{name}
     </select>
 
+    <select id="selectUserByNameAndPassword" resultType="com.lcl.labmanage.entity.User">
+        select * from user where username = #{name} and password = #{password}
+    </select>
 </mapper>

@@ -44,18 +44,44 @@
 </script>
 
 <script>
-    function login() {
-        //todo login method
+    function isNull() {
+        var username = $("#entry_name").val();
+        var password = $("#entry_password").val();
+        if (username == null || username == "") {
+            alert("用户名不能为空");
+            return false;
+        }
+        if (password == null || password == "") {
+            alert("密码不能为空");
+            return false;
+        }
+        return true;
 
     }
+    function login() {
+        //todo login method
+        var username = $("#entry_name").val();
+        var password = $("#entry_password").val();
+        if (isNull()) {
+            $.ajax({
+                type:"POST",
+                url:"/start/sign/in",
+                data: {
+                    userName: username,
+                    password: password,
+                },
+                dataType:"json",
+                success: function (msg) {
+                    if (msg.result == 0) {
+                        window.location.href = "/start/index/admin";
+                    } else {
+                        alert("用户名不存在或密码错误");
+                    }
+                }
+            });
+        }
 
-    function registerJump() {
-        //todo register method
-        $.ajax({
-            type:"GET",
-            url:"/start/register",
-            // success:
-        })
+
 
     }
 </script>

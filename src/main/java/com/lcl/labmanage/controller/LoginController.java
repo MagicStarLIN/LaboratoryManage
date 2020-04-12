@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoginController {
     @Autowired
     private PersonService personService;
+
     @GetMapping("/login")
     public String getLogin() {
         return "login";
@@ -29,10 +30,20 @@ public class LoginController {
     public String jumpToRegister() {
         return "register";
     }
+    @GetMapping("/index/admin")
+    public String jumpToIndexAdmin() {
+        return "page/indexAdmin";
+    }
 
     @PostMapping("/register")
     @ResponseBody
     public Response registerUser(User user) {
         return personService.register(user);
+    }
+
+    @PostMapping("/sign/in")
+    @ResponseBody
+    public Response signIn(User user) {
+        return personService.personVerify(user);
     }
 }

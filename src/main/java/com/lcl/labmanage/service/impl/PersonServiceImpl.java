@@ -6,7 +6,6 @@ import com.lcl.labmanage.entity.ResultCode;
 import com.lcl.labmanage.entity.User;
 import com.lcl.labmanage.service.PersonService;
 import com.lcl.labmanage.utils.MD5Utils;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,11 +21,32 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     private UserMapper userMapper;
+
+    /**
+     * @Title personVerify
+     * @Description 登陆验证
+     * @Author liuchanglin
+     * @Date 2020/4/12 11:40 下午
+     * @Param [user]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response personVerify(User user) {
-        return null;
+        User currentUser = userMapper.selectUserByNameAndPassword(user.getUserName(),
+                MD5Utils.encrypt(user.getPassword()));
+        if (currentUser != null) {
+            return Response.success(currentUser);
+        }
+        return Response.error(ResultCode.USER_ABSENCE.getCode(), ResultCode.USER_ABSENCE.getMsg());
     }
-
+    /**
+     * @Title register
+     * @Description 注册
+     * @Author liuchanglin
+     * @Date 2020/4/12 11:40 下午
+     * @Param [user]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response register(User user) {
         if (userMapper.selectUserByName(user.getUserName()) != null) {
