@@ -1,13 +1,14 @@
 package com.lcl.labmanage.config;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 /**
  * @author liuchanglin
  * @version 1.0
- * @ClassName: eqw
+ * @ClassName: MyResourceConfig
  * @date 2020/4/10 11:12 下午
  */
 @Configuration

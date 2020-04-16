@@ -26,5 +26,5 @@ public class User {
     /**
      * 角色
      */
-    private Integer role;
+    private String role;
 }

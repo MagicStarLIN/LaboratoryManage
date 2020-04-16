@@ -74,10 +74,9 @@
         var password = $("#entry_password").val();
         var role = $("#role_select").val();
         if (judgeIsNull()) {
-            //todo register method
             $.ajax({
                 type:"POST",
-                url:"/start/register",
+                url:"/user/register",
                 data: {
                     userName: userName,
                     password: password,

@@ -15,4 +15,6 @@ public interface PersonService {
 
     Response register(User user);
 
+    Response userList();
+
 }

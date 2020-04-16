@@ -56,5 +56,10 @@ public class PersonServiceImpl implements PersonService {
         return Response.success(userMapper.insertUser(user),"注册成功");
     }
 
+    @Override
+    public Response userList() {
+        return Response.success(userMapper.selectAllUser(),userMapper.selectAllUser().size());
+    }
+
 
 }

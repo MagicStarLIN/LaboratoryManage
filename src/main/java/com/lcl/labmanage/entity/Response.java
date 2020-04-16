@@ -14,11 +14,13 @@ public class Response<T> implements Serializable {
     /**
      * Response result
      */
-    private Integer result;
+    private Integer code;
     /**
      * Response message
      */
     private String msg;
+
+    private Integer count;
     /**
      * Response data
      */
@@ -26,40 +28,47 @@ public class Response<T> implements Serializable {
 
     public static <T> Response<T> success(T data){
         Response<T> response = new Response<>();
-        response.setResult(0);
+        response.setCode(0);
         response.setData(data);
         return response;
     }
 
     public static <T> Response<T> success(T data, String msg){
         Response<T> response = new Response<>();
-        response.setResult(0);
+        response.setCode(0);
         response.setData(data);
         response.setMsg(msg);
         return response;
     }
+    public static <T> Response<T> success(T data,Integer count){
+        Response<T> response = new Response<>();
+        response.setCode(0);
+        response.setData(data);
+        response.setCount(count);
+        return response;
+    }
+
 
     public static <T> Response<T> error(int result, String msg){
         Response<T> response = new Response<>();
-        response.setResult(result);
+        response.setCode(result);
         response.setMsg(msg);
         return response;
     }
     public static <T> Response<T> error(T data,int result, String msg){
         Response<T> response = new Response<>();
-        response.setResult(result);
+        response.setCode(result);
         response.setMsg(msg);
         return response;
     }
 
 
-
-    public Integer getResult() {
-        return result;
+    public Integer getCode() {
+        return code;
     }
 
-    public void setResult(Integer result) {
-        this.result = result;
+    public void setCode(Integer code) {
+        this.code = code;
     }
 
     public String getMsg() {
@@ -78,7 +87,13 @@ public class Response<T> implements Serializable {
         this.data = data;
     }
 
+    public Integer getCount() {
+        return count;
+    }
 
+    public void setCount(Integer count) {
+        this.count = count;
+    }
 
     public static class Builder<T> {
 
@@ -89,7 +104,7 @@ public class Response<T> implements Serializable {
         }
 
         public Builder<T> result(int result) {
-            this.response.setResult(result);
+            this.response.setCode(result);
             return this;
         }
 
@@ -104,7 +119,7 @@ public class Response<T> implements Serializable {
         }
 
         public Response<T> build() {
-            Objects.requireNonNull(this.response.getResult(), "Result can not be null");
+            Objects.requireNonNull(this.response.getCode(), "Result can not be null");
             //       Objects.requireNonNull(this.response.getMsg(), "Msg can not be null");
             return this.response;
         }
