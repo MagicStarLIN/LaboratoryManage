@@ -166,7 +166,9 @@
             });
         } else if(obj.event === 'edit'){
             layer.open({
-                content:$('#window')
+                 content:$('#window')
+                ,type: 1
+                ,area: ['400px', '250px']
                 ,btn: ['确定', '取消']
                 ,yes:function(){
                     //todo 编辑权限
