@@ -14,7 +14,7 @@ public class Notice {
 
     private String title;
 
-    private String noticesinfos;
+    private String noticeinfos;
 
     private String updatetime;
 

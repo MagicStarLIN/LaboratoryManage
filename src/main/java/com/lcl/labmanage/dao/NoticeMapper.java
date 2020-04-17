@@ -12,7 +12,12 @@ import java.util.List;
  * @date 2020/4/17 5:57 下午
  */
 public interface NoticeMapper {
+
     Integer getCountOfNotices();
 
     List<Notice> getAllNoticesByPage(@Param("page") Integer page, @Param("size") Integer size);
+
+    Notice getNoticesById(Integer id);
+
+    Boolean addNotice(Notice notice);
 }

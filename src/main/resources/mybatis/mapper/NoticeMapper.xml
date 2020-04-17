@@ -15,4 +15,18 @@
         limit #{page},#{size}
     </select>
 
+    <select id="getNoticesById" parameterType="java.lang.Integer"
+            resultType="com.lcl.labmanage.entity.Notice">
+        SELECT
+        *
+        from notices
+        where id = #{id}
+    </select>
+
+    <insert id="addNotice" parameterType="com.lcl.labmanage.entity.Notice">
+        insert into
+        notices(title,noticeinfos,updatetime,publisher)
+        values (#{title},#{noticeinfos},#{updatetime},#{publisher})
+    </insert>
+
 </mapper>

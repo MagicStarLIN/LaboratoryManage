@@ -7,4 +7,8 @@ import java.util.List;
 
 public interface NoticeService {
     Response getAllNotices(Integer page, Integer limit);
+
+    Response getNoticeInfos(Integer id);
+
+    Response addNotice(String title, String content,String publisher);
 }

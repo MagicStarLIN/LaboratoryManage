@@ -69,6 +69,15 @@
             </ul>
         </div>
     </div>
+    <div class="site-text" style="margin: 5%; display: none" id="window"  target="test123">
+        <div class="layui-card">
+            <div class="layui-card-header" id="notice_title">标题</div>
+            <div class="layui-card-body" id="notice_content">
+                内容
+            </div>
+        </div>
+    </div>
+
 
     <div class="layui-body">
         <div style="padding: 15px;">
@@ -82,6 +91,8 @@
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
             <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+<!--            todo 公告新增功能-->
+            <button class="layui-btn layui-btn-sm"><a href="/start/notice/add">新增公告</a> </button>
         </div>
     </script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -151,41 +162,36 @@
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
-                    layer.open({
-                        content:$('#window')
-                        ,type: 1
-                        ,area: ['400px', '250px']
-                        ,btn: ['确定', '取消']
-                        ,yes:function(){
-                            //todo 编辑权限
-                            var valueRole = $('#range').val();
-                            if (valueRole != null) {
-                                $.ajax({
-                                    type:"POST",
-                                    url:"/user/update/role",
-                                    data: {
-                                        id: data.id,
-                                        role: valueRole,
-                                    },
-                                    dataType:"json",
-                                    success: function (msg) {
-                                        if (msg.code != 0) {
-                                            // window.location.href = "/start/index/admin";
-                                            // localStorage.setItem("userName", username);
-                                            alert("修改失败");
-                                        } else {
-                                            location.reload();
-                                        }
-                                    }
-                                });
-                            }
-                            // editRole(data.id,valueRole);
-                        },
-                        end: function () {
-                            location.reload();
-                        }
 
+                    $.ajax({
+                        type:"GET",
+                        url:"/notice/infos",
+                        data: {
+                            id: data.id,
+                        },
+                        dataType:"json",
+                        success: function (msg) {
+                            if (msg.code == 0) {
+                                $('#notice_title').text(msg.data.title)
+                                $('#notice_content').text(msg.data.noticeinfos)
+                            } else {
+                                alert("发生异常");
+                            }
+                        }
                     });
+
+                        //示范一个公告层
+                        layer.open({
+                            content:$('#window')
+                            ,type: 1
+                            ,area: ['800px', '800px']
+                            ,btn: ['确定', '取消']
+                            ,success: function(layero){
+
+                            }
+                        });
+
+
                 }
             });
         });
@@ -198,32 +204,11 @@
                 $("#userName").html(theme);
             }
         }
-        function editRole(id,roleValue) {
-            if (roleValue != null) {
-                $.ajax({
-                    type:"PUT",
-                    url:"/user/update/role",
-                    data: {
-                        id: id,
-                        role: roleValue,
-                    },
-                    dataType:"json",
-                    success: function (msg) {
-                        if (msg.code != 0) {
-                            // window.location.href = "/start/index/admin";
-                            // localStorage.setItem("userName", username);
-                            alert("修改失败");
-                        }
-                    }
-                });
-            }
-        }
-
         function deleteUser(id) {
             if (id != null) {
                 $.ajax({
                     type:"POST",
-                    url:"/user/delete",
+                    url:"/notice/delete",
                     data: {
                         id: id,
                     },

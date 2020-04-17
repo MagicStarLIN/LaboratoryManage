@@ -35,7 +35,11 @@ public class ToPageController {
 
     @GetMapping("/user/manage")
     public String jumpToUserManage() {
-
         return "page/UserManage";
+    }
+
+    @GetMapping("/notice/add")
+    public String jumToNoticeAdd() {
+        return "page/NoticeAdd";
     }
 }
