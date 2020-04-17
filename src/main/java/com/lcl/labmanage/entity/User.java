@@ -26,5 +26,5 @@ public class User {
     /**
      * 角色
      */
-    private String role;
+    private String role_name;
 }

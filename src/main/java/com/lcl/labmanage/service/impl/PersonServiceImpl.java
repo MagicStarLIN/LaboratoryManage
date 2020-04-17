@@ -57,9 +57,26 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public Response userList() {
-        return Response.success(userMapper.selectAllUser(),userMapper.selectAllUser().size());
+    public Response userList(Integer page,Integer size) {
+        return Response.success(userMapper.selectAllUserByPage((page-1)*size,size),userMapper.selectAllUser());
     }
 
+    @Override
+    public Response updateRole(Integer id, Integer role) {
+        int flage = userMapper.updateUserRole(id, role);
+        if (flage != 0) {
+            return Response.success(true);
+        } else {
+            return Response.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
+        }
+    }
 
+    @Override
+    public Response deleteUser(Integer id) {
+        if (userMapper.deleteUser(id)) {
+            return Response.success(true);
+        } else {
+            return Response.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
+        }
+    }
 }

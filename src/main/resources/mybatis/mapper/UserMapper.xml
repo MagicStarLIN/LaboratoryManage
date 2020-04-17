@@ -15,7 +15,15 @@
         select * from user where username = #{name} and password = #{password}
     </select>
 
-    <select id="selectAllUser" resultType="com.lcl.labmanage.entity.User">
+    <select id="selectAllUser" resultType="java.lang.Integer">
+        SELECT
+        count(1)
+        FROM user u
+        LEFT JOIN role r
+        ON u.role = r.id
+    </select>
+
+    <select id="selectAllUserByPage" resultType="com.lcl.labmanage.entity.User">
         SELECT
         u.id,
         u.username,
@@ -23,5 +31,14 @@
         FROM user u
         LEFT JOIN role r
         ON u.role = r.id
+        limit #{page},#{size}
     </select>
+
+    <update id="updateUserRole">
+        update lab_manage.user set role = #{role} where id = #{id}
+    </update>
+
+    <delete id="deleteUser">
+        delete from user where id = #{id}
+    </delete>
 </mapper>

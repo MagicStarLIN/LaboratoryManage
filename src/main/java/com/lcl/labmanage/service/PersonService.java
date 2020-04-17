@@ -15,6 +15,10 @@ public interface PersonService {
 
     Response register(User user);
 
-    Response userList();
+    Response userList(Integer page,Integer size);
+
+    Response updateRole(Integer id, Integer role);
+
+    Response deleteUser(Integer id);
 
 }

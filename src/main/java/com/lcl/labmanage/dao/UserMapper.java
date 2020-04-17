@@ -12,6 +12,12 @@ public interface UserMapper {
 
     User selectUserByNameAndPassword(@Param("name") String name, @Param("password") String password);
 
-    List<User> selectAllUser();
+    Integer selectAllUser();
+
+    List<User> selectAllUserByPage(@Param("page") Integer page,@Param("size") Integer size);
+
+    int updateUserRole(@Param("id") Integer id, @Param("role") Integer role);
+
+    boolean deleteUser(@Param("id") Integer id);
 
 }

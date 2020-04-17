@@ -22,7 +22,6 @@ public class LoginController {
     private PersonService personService;
 
 
-
     @PostMapping("/register")
     @ResponseBody
     public Response registerUser(User user) {
@@ -37,7 +36,19 @@ public class LoginController {
 
     @GetMapping("/list")
     @ResponseBody
-    public Response userList() {
-        return personService.userList();
+    public Response userList(Integer page, Integer limit) {
+        return personService.userList(page, limit);
+    }
+
+    @PostMapping("/update/role")
+    @ResponseBody
+    public Response updateRole(Integer id, Integer role) {
+        return personService.updateRole(id, role);
+    }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public Response deleteUser(Integer id) {
+        return personService.deleteUser(id);
     }
 }

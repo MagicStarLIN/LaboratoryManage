@@ -14,15 +14,15 @@ spring:
       driver-class-name: com.mysql.jdbc.Driver
       jdbc-url: jdbc:mysql://47.102.118.146:3306/lab_manage?useUnicode=true&amp;characterEncoding=UTF-8&amp;autoReconnect=true&amp;useSSL=false
 #log
-logging:
-  level:
-    com:
-      alibaba: DEBUG
-      ibatis: DEBUG
-      lcl:
-        datareplenish: DEBUG
-    org:
-      mybatis: DEBUG
-      springframework: DEBUG
+#logging:
+#  level:
+#    com:
+#      alibaba: DEBUG
+#      ibatis: DEBUG
+#      lcl:
+#        datareplenish: DEBUG
+#    org:
+#      mybatis: DEBUG
+#      springframework: DEBUG
   file:
     name: lab_manage.log

@@ -35,7 +35,7 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree"  lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed">
-                    <a class="" href="/start/lab/manage">实验室管理</a>
+                    <a class="" href="javascript:;">实验室管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/start/lab/info">实验室信息</a></dd>
                         <dd><a href="/start/lab/equip">实验室设备管理</a></dd>
@@ -44,7 +44,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="/start/exper/manage">实验管理</a>
+                    <a href="javascript:;">实验管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/start/exper/log">实验日志</a></dd>
                         <dd><a href="/start/exper/report">实验报告</a></dd>
@@ -52,7 +52,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="/start/log/manage">日志管理</a>
+                    <a href="javascript:;">日志管理</a>
                     <dl class="layui-nav-child">
                         <dd><a href="/start/log/preview">查看日志</a></dd>
                         <dd><a href="/start/require/manage">需求管理</a></dd>
@@ -78,10 +78,10 @@
                 <label class="layui-form-label">权限</label>
                 <div class="layui-input-block">
                     <select name="range" id="range" lay-filter="range">
-                        <option value="0">管理员</option>
-                        <option value="1">用户</option>
-                        </select>
-                    </div>
+                        <option value="1">管理员</option>
+                        <option value="4">用户</option>
+                    </select>
+                </div>
             </div>
         </form>
     </div>
@@ -125,11 +125,11 @@
                  {type: 'checkbox', fixed: 'left'}
                 ,{field:'id',  title: 'ID', sort: true}
                 ,{field:'userName', title: '用户名'}
-                ,{field:'role', title: '角色', sort: true}
+                ,{field:'role_name', title: '角色', sort: true}
                 ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
             ]
-            ]
-            //todo 分页
+            ],
+            page:true
         });
 
 
@@ -162,6 +162,7 @@
         if(obj.event === 'del'){
             layer.confirm('真的删除行么', function(index){
                 obj.del();
+                deleteUser(data.id);
                 layer.close(index);
             });
         } else if(obj.event === 'edit'){
@@ -172,7 +173,28 @@
                 ,btn: ['确定', '取消']
                 ,yes:function(){
                     //todo 编辑权限
-                    alert("ss")
+                    var valueRole = $('#range').val();
+                    if (valueRole != null) {
+                        $.ajax({
+                            type:"POST",
+                            url:"/user/update/role",
+                            data: {
+                                id: data.id,
+                                role: valueRole,
+                            },
+                            dataType:"json",
+                            success: function (msg) {
+                                if (msg.code != 0) {
+                                    // window.location.href = "/start/index/admin";
+                                    // localStorage.setItem("userName", username);
+                                    alert("修改失败");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                    }
+                    // editRole(data.id,valueRole);
                 },
                 end: function () {
                     location.reload();
@@ -189,6 +211,44 @@
         var theme=localStorage.getItem("userName");
         if(theme!=null||theme!=""){
             $("#userName").html(theme);
+        }
+    }
+    function editRole(id,roleValue) {
+        if (roleValue != null) {
+            $.ajax({
+                type:"PUT",
+                url:"/user/update/role",
+                data: {
+                    id: id,
+                    role: roleValue,
+                },
+                dataType:"json",
+                success: function (msg) {
+                    if (msg.code != 0) {
+                        // window.location.href = "/start/index/admin";
+                        // localStorage.setItem("userName", username);
+                        alert("修改失败");
+                    }
+                }
+            });
+        }
+    }
+
+    function deleteUser(id) {
+        if (id != null) {
+            $.ajax({
+                type:"POST",
+                url:"/user/delete",
+                data: {
+                    id: id,
+                },
+                dataType:"json",
+                success: function (msg) {
+                    if (msg.code != 0) {
+                        alert("删除失败");
+                    }
+                }
+            });
         }
     }
 

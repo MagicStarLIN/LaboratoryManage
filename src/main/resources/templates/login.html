@@ -72,7 +72,7 @@
                 },
                 dataType:"json",
                 success: function (msg) {
-                    if (msg.result == 0) {
+                    if (msg.code == 0) {
                         window.location.href = "/start/index/admin";
                         localStorage.setItem("userName", username);
                     } else {
