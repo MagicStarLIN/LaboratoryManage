@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcl.labmanage.dao.LabMapper">
+    <select id="getCountOfLab" resultType="java.lang.Integer">
+        select count(1) from lab_infos
+    </select>
+
+    <select id="getAllLabsByPage" resultType="com.lcl.labmanage.entity.Lab">
+        SELECT
+        *
+        from lab_infos
+        limit #{page},#{size}
+    </select>
+
+    <select id="getLabById" parameterType="java.lang.Integer"
+            resultType="com.lcl.labmanage.entity.Lab">
+        SELECT
+        *
+        from lab_infos
+        where id = #{id}
+    </select>
+
+    <insert id="addLab" parameterType="com.lcl.labmanage.entity.Lab">
+        insert into lab_infos(labname,administrator,admin_contact,location)
+        values
+        (#{labName},#{administrator},#{admin_contact},#{location})
+    </insert>
+
+</mapper>

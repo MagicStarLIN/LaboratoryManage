@@ -14,11 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 @RequestMapping("start")
 public class ToPageController {
-    @RequestMapping(name = "/toPage",method = RequestMethod.GET)
-    public String toPage(HttpServletRequest request){
+    @RequestMapping(name = "/toPage", method = RequestMethod.GET)
+    public String toPage(HttpServletRequest request) {
         String url = request.getParameter("url");
         return url;
     }
+
     @GetMapping("/login")
     public String getLogin() {
         return "login";
@@ -28,6 +29,7 @@ public class ToPageController {
     public String jumpToRegister() {
         return "register";
     }
+
     @GetMapping("/index/admin")
     public String jumpToIndexAdmin() {
         return "page/indexAdmin";
@@ -37,9 +39,12 @@ public class ToPageController {
     public String jumpToUserManage() {
         return "page/UserManage";
     }
-
     @GetMapping("/notice/add")
     public String jumToNoticeAdd() {
         return "page/NoticeAdd";
+    }
+    @GetMapping("/lab/info")
+    public String jumpToLabInfos() {
+        return "page/labInfos";
     }
 }

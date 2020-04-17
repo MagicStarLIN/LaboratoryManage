@@ -39,7 +39,6 @@
                     <dl class="layui-nav-child">
                         <dd><a href="/start/lab/info">实验室信息</a></dd>
                         <dd><a href="/start/lab/equip">实验室设备管理</a></dd>
-                        <dd><a href="/start/lab/destop">实验台管理</a></dd>
                         <!--                        <dd><a href="">超链接</a></dd>-->
                     </dl>
                 </li>
@@ -172,7 +171,6 @@
                 ,area: ['400px', '250px']
                 ,btn: ['确定', '取消']
                 ,yes:function(){
-                    //todo 编辑权限
                     var valueRole = $('#range').val();
                     if (valueRole != null) {
                         $.ajax({
