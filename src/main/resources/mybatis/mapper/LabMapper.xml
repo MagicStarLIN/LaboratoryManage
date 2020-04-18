@@ -26,4 +26,7 @@
         (#{labName},#{administrator},#{admin_contact},#{location})
     </insert>
 
+    <delete id="deleteLab">
+        delete from lab_infos where id = #{id}
+    </delete>
 </mapper>

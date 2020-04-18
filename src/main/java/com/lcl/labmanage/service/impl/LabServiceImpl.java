@@ -1,6 +1,7 @@
 package com.lcl.labmanage.service.impl;
 
 import com.lcl.labmanage.dao.LabMapper;
+import com.lcl.labmanage.dao.OccupyInfoMapper;
 import com.lcl.labmanage.entity.Lab;
 import com.lcl.labmanage.entity.Response;
 import com.lcl.labmanage.service.LabService;
@@ -18,6 +19,8 @@ import org.springframework.stereotype.Service;
 public class LabServiceImpl implements LabService {
     @Autowired
     private LabMapper labMapper;
+    @Autowired
+    private OccupyInfoMapper occupyInfoMapper;
     @Override
     public Response getAllLabInfos(Integer page, Integer limit) {
         return Response.success(labMapper.getAllLabsByPage((page - 1) * limit, limit), labMapper.getCountOfLab());
@@ -26,6 +29,12 @@ public class LabServiceImpl implements LabService {
     @Override
     public Response addLab(Lab lab) {
         return Response.success(labMapper.addLab(lab));
+    }
+
+    @Override
+    public Response deleteLab(Integer id) {
+        String lab = labMapper.getLabById(id).getLabName();
+        return Response.success(labMapper.deleteLab(id) && occupyInfoMapper.deleteRecordByLabName(lab));
     }
 
 }

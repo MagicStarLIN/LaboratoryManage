@@ -14,4 +14,6 @@ public interface LabMapper {
     Lab getLabById(Integer id);
 
     Boolean addLab(Lab lab);
+
+    Boolean deleteLab(Integer id);
 }

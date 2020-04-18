@@ -33,4 +33,10 @@ public class LabController {
     public Response addNewLab(Lab lab) {
         return labService.addLab(lab);
     }
+
+    @PostMapping("/delete")
+    @ResponseBody
+    public Response deleteLab(Integer id) {
+        return labService.deleteLab(id);
+    }
 }

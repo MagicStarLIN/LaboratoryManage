@@ -51,11 +51,7 @@
                     </dl>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">实验管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="/start/exper/log">实验日志</a></dd>
-                        <dd><a href="/start/exper/report">实验报告</a></dd>
-                    </dl>
+                    <a href="/start/exper/log">实验日志</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">日志管理</a>
@@ -154,7 +150,7 @@
                 if(obj.event === 'del'){
                     layer.confirm('真的删除行么', function(index){
                         obj.del();
-                        deleteUser(data.id);
+                        deleteLab(data.id);
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
@@ -172,7 +168,7 @@
                 $("#userName").html(theme);
             }
         }
-        function deleteUser(id) {
+        function deleteLab(id) {
             if (id != null) {
                 $.ajax({
                     type:"POST",

@@ -37,5 +37,8 @@
         update lab_occupy_log set state = #{result} where id = #{id}
     </update>
 
+    <delete id="deleteRecordByLabName">
+        delete from lab_occupy_log where lab = #{lab};
+    </delete>
 
 </mapper>

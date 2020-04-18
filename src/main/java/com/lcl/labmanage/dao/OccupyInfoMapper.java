@@ -17,4 +17,6 @@ public interface OccupyInfoMapper {
     Boolean insertNewOccupyRecord(LabOccupyRecord labOccupyRecord);
 
     Boolean updateStateById(@Param("id") Integer id, @Param("result") String result);
+
+    Boolean deleteRecordByLabName(String lab);
 }

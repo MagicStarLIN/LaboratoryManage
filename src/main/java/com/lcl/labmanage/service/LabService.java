@@ -13,4 +13,6 @@ public interface LabService {
     Response getAllLabInfos(Integer page, Integer limit);
 
     Response addLab(Lab lab);
+
+    Response deleteLab(Integer id);
 }
