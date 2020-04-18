@@ -1,6 +1,7 @@
 package com.lcl.labmanage.service.impl;
 
 import com.lcl.labmanage.dao.LabMapper;
+import com.lcl.labmanage.entity.Lab;
 import com.lcl.labmanage.entity.Response;
 import com.lcl.labmanage.service.LabService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,11 @@ public class LabServiceImpl implements LabService {
     @Override
     public Response getAllLabInfos(Integer page, Integer limit) {
         return Response.success(labMapper.getAllLabsByPage((page - 1) * limit, limit), labMapper.getCountOfLab());
+    }
+
+    @Override
+    public Response addLab(Lab lab) {
+        return Response.success(labMapper.addLab(lab));
     }
 
 }

@@ -4,6 +4,8 @@ public enum ResultCode {
     SUCCESS(0, "成功"),
     REPEAT_NAME(401, "用户名重复"),
     USER_ABSENCE(402, "用户不存在"),
+    NULL_DATA(403, "无数据"),
+    AREADY_OCCUPIED(406, "实验室已经被占用"),
 
     ERROR(500,"错误")
     ;

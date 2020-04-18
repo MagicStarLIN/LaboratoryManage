@@ -1,5 +1,6 @@
 package com.lcl.labmanage.service;
 
+import com.lcl.labmanage.entity.Lab;
 import com.lcl.labmanage.entity.Response;
 
 /**
@@ -10,4 +11,6 @@ import com.lcl.labmanage.entity.Response;
  */
 public interface LabService {
     Response getAllLabInfos(Integer page, Integer limit);
+
+    Response addLab(Lab lab);
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcl.labmanage.dao.DeviceMapper">
+
+    <select id="getCountOfDevice" resultType="java.lang.Integer">
+        select count(1) from device
+    </select>
+
+    <select id="getAllDeviceByPage" resultType="com.lcl.labmanage.entity.Device">
+        SELECT
+        *
+        from device
+        limit #{page},#{size}
+    </select>
+
+    <select id="getDeviceById" parameterType="java.lang.Integer"
+            resultType="com.lcl.labmanage.entity.Device">
+        SELECT
+        *
+        from device
+        where id = #{id}
+    </select>
+
+    <insert id="addDevice" parameterType="com.lcl.labmanage.entity.Device">
+INSERT INTO `lab_manage`.`device`(`euipment_name`, `lab_name`, `total_count`, `broken_count`, `usable_count`, `updatetime`)
+ VALUES ( #{equipment_name}, #{lab_name}, #{total_count}, #{broken_count}, #{usable_count}, #{updatetime});
+    </insert>
+
+</mapper>

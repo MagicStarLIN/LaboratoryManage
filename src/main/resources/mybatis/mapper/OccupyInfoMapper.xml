@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcl.labmanage.dao.OccupyInfoMapper">
+
+    <select id="getLabOccupyRecordByName" parameterType="java.lang.String"
+            resultType="com.lcl.labmanage.entity.LabOccupyRecord">
+        SELECT
+        *
+        from lab_occupy_log
+        where lab = #{labName}
+    </select>
+
+    <select id="getCountOfOccupyInfosByName" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from lab_occupy_log
+        where lab = #{labName}
+    </select>
+
+    <select id="getCountOfOccupyInfosByTime" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from lab_occupy_log
+        where lab = #{labName} and end_time > #{time} and state != '不准许'
+    </select>
+
+    <insert id="insertNewOccupyRecord" parameterType="com.lcl.labmanage.entity.LabOccupyRecord">
+        INSERT INTO `lab_manage`.`lab_occupy_log`
+        (`lab`, `purpose`, `reason`, `user`, `user_contact`, `start_time`, `end_time`, `state`, `note`)
+        VALUES
+        (#{lab}, #{purpose}, #{reason}, #{user}, #{user_contact},
+        #{start_time}, #{end_time}, #{state}, #{note});
+    </insert>
+
+    <update id="updateStateById">
+        update lab_occupy_log set state = #{result} where id = #{id}
+    </update>
+
+
+</mapper>

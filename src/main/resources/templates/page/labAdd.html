@@ -64,22 +64,33 @@
         <div style="padding: 15px;">
             <label class="layui-form-label">实验室</label>
             <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input id="lab_name" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入实验室" class="layui-input">
             </div>
+            <br>
+            <br>
+
             <label class="layui-form-label">管理员</label>
             <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input id="lab_admin" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入管理员" class="layui-input">
             </div>
+            <br>
+            <br>
+
             <label class="layui-form-label">管理员联系方式</label>
             <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input id="admin_contact" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入管理员联系方式" class="layui-input">
             </div>
+            <br>
+            <br>
+
             <label class="layui-form-label">实验室地点</label>
             <div class="layui-input-block">
-                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                <input id="location" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入实验室地点" class="layui-input">
             </div>
+            <br>
+
             <div class="layui-form-item">
-                <button class="layui-btn" onclick=commitNotice()>提交</button>
+                <button class="layui-btn" onclick=commitLab()>提交</button>
                 <button class="layui-btn"><a href="/start/lab/info">返回</a></button>
             </div>
         </div>
@@ -96,6 +107,56 @@
         if(theme!=null||theme!=""){
             // $("#userName").show();
             $("#userName").html(theme);
+        }
+    }
+    function isNotNullField() {
+        var lab = $('#lab_name').val();
+        var labAdmin = $('#lab_admin').val();
+        var adminContact = $('#admin_contact').val();
+        var location = $('#location').val();
+        if (lab == null || lab == "") {
+            alert("请输入实验室");
+            return false;
+        }
+        if (labAdmin == null || labAdmin == "") {
+            alert("请输入管理员");
+            return false;
+        }
+        if (adminContact == null || adminContact == "") {
+            alert("请输入管理员联系方式");
+            return false;
+        }
+        if (location == null || location == "") {
+            alert("请输入地点");
+            return false;
+        }
+        return true;
+    }
+    function commitLab() {
+        var lab = $('#lab_name').val();
+        var labAdmin = $('#lab_admin').val();
+        var adminContact = $('#admin_contact').val();
+        var location = $('#location').val();
+        if (isNotNullField()) {
+            $.ajax({
+                type:"POST",
+                url:"/lab/add",
+                data: {
+                    labName: lab,
+                    administrator: labAdmin,
+                    admin_contact: adminContact,
+                    location: location
+                },
+                dataType:"json",
+                success: function (msg) {
+                    if (msg.code == 0) {
+                        window.location.href = "/start/lab/info";
+                    } else {
+                        alert("提交失败");
+                    }
+                }
+            });
+
         }
     }
     layui.use('element', function(){

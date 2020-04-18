@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>NEAU实验室管理</title>
+    <link rel="stylesheet" href = "/lib/layui/css/layui.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.include.js"></script>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            NEAU实验室
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/start/index/admin">公告页面</a></li>
+            <!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
+            <!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a href="javascript:;">其它系统</a>-->
+            <!--                <dl class="layui-nav-child">-->
+            <!--                    <dd><a href="">邮件管理</a></dd>-->
+            <!--                    <dd><a href="">消息管理</a></dd>-->
+            <!--                    <dd><a href="">授权管理</a></dd>-->
+            <!--                </dl>-->
+            <!--            </li>-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="userName">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="/start/login">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">实验室管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/start/lab/info">实验室信息</a></dd>
+                        <dd><a href="/start/lab/equip">实验室设备管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">实验管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/start/exper/log">实验日志</a></dd>
+                        <dd><a href="/start/exper/report">实验报告</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">日志管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/start/log/preview">查看日志</a></dd>
+                        <dd><a href="/start/require/manage">需求管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="/start/user/manage">用户管理</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="site-text" style="margin: 5%; display: none" id="window"  target="test123">
+        <div class="layui-card">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用途</label>
+                <div class="layui-input-block">
+                    <select name="range" id="range" lay-filter="range">
+                        <option value="上课">上课</option>
+                        <option value="实验">实验</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+            <br><br>
+            <label class="layui-form-label">具体用途</label>
+            <div class="layui-input-block">
+                <input id="reason" type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
+            </div>
+            <br><br>
+            <label class="layui-form-label">联系方式</label>
+            <div class="layui-input-block">
+                <input id="contact_method" type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
+            </div>
+            <br><br>
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <input id="note" type="text" name="title" lay-verify="title" autocomplete="off"  class="layui-input">
+            </div>
+            <br><br>
+            <div class="layui-inline">
+                <label class="layui-form-label">起始时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" style="width:200px;" class="layui-input" id="start_time" placeholder="yyyy-MM-dd HH:mm:ss">
+                </div>
+            </div>
+            <br>
+            <br>
+
+            <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline">
+                    <input type="text" style="width:200px;" class="layui-input" id="end_time" placeholder="yyyy-MM-dd HH:mm:ss">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-body">
+        <div style="padding: 15px;">
+            <table class="layui-hide" id="test" lay-filter="test"></table>
+        </div>
+    </div>
+    <script src="/lib/layui/layui.js"></script>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+            <button class="layui-btn layui-btn-sm" lay-event="applyFor">申请占用</button>
+        </div>
+    </script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="agree">通过</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="reject">拒绝</a>
+    </script>
+    <script>
+        layui.use('laydate', function() {
+            var laydate = layui.laydate;
+            //日期时间选择器
+            laydate.render({
+                elem: '#start_time'
+                ,type: 'datetime'
+            });
+
+            laydate.render({
+                elem: '#end_time'
+                ,type: 'datetime'
+            });
+        });
+    </script>
+    <script>
+        var name = localStorage.getItem("labName")
+        layui.use('table', function(){
+            // var name = localStorage.getItem("labName")
+            localStorage.removeItem("labName")
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                //todo select
+                ,url:'/occupy/infos?labName=' + name
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    ,layEvent: 'LAYTABLE_TIPS'
+                    ,icon: 'layui-icon-tips'
+                }]
+                ,title: '用户数据表'
+                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,cols: [
+                    [
+                        {type: 'checkbox', fixed: 'left'}
+                        ,{field:'id',  title: 'ID', sort: true}
+                        ,{field:'lab', title: '实验室'}
+                        ,{field:'purpose', title: '用途', sort: true}
+                        ,{field:'reason', title: '具体用途', sort: true}
+                        ,{field:'user', title: '申请人', sort: true}
+                        ,{field:'user_contact', title: '申请人联系方式', sort: true}
+                        ,{field:'start_time', title: '占用起始时间', sort: true}
+                        ,{field:'end_time', title: '占用结束时间', sort: true}
+                        ,{field:'state', title: '申请结果', sort: true}
+                        ,{field:'note', title: '申请备注', sort: true}
+                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                    ]
+                ],
+                page:true
+            });
+
+
+            table.on('toolbar(test)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：'+ data.length + ' 个');
+                        break;
+                    case 'isAll':
+                        layer.msg(checkStatus.isAll ? '全选': '未全选');
+                        break;
+                    case "applyFor":
+                        layer.open({
+                            content:$('#window')
+                            ,type: 1
+                            ,area: ['800px', '800px']
+                            ,btn: ['确定', '取消']
+                            ,yes: function(layero){
+                                let labName = name;
+                                let purpose = $('#range').val();
+                                let reason = $('#reason').val();
+                                let user = localStorage.getItem("userName");
+                                let contact = $('#contact_method').val();
+                                let startTime = $('#start_time').val();
+                                let endTime = $('#end_time').val();
+                                let note = $('#note').val();
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/occupy/apply/for",
+                                    data: {
+                                        lab: labName,
+                                        purpose: purpose,
+                                        reason: reason,
+                                        user: user,
+                                        user_contact: contact,
+                                        start_time: startTime,
+                                        end_time: endTime,
+                                        note: note
+                                    },
+                                    dataType:"json",
+                                    success: function (msg) {
+                                        if (msg.code == 0) {
+                                            localStorage.setItem("labName", name);
+                                            window.location.href="/start/lab/occupy/infos"
+                                        } else {
+                                            layer.msg(msg.msg);
+                                        }
+                                    }
+                                });
+                            }
+                        });
+                };
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                //console.log(obj)
+                if(obj.event === 'reject'){
+                    layer.confirm('确认拒绝？', function(index){
+                        confirmOccupy(data.id,"不准许");
+                        layer.close(index);
+                        localStorage.setItem("labName", name);
+                        window.location.href="/start/lab/occupy/infos"
+                    });
+                } else if(obj.event === 'agree'){
+                    confirmOccupy(data.id,"准许")
+                    localStorage.setItem("labName", name);
+                    window.location.href="/start/lab/occupy/infos"
+                }
+            });
+        });
+
+        //JavaScript代码区域
+
+        function load_data(){
+            var theme=localStorage.getItem("userName");
+            if(theme!=null||theme!=""){
+                $("#userName").html(theme);
+            }
+        }
+        function confirmOccupy(id,result) {
+            if (id != null && result != null) {
+                $.ajax({
+                    type:"POST",
+                    url:"/occupy/confirm",
+                    data: {
+                        id: id,
+                        state: result
+                    },
+                    dataType:"json",
+                    success: function (msg) {
+                        if (msg.code != 0) {
+                            alert("审核失败");
+                        }
+                    }
+                });
+            }
+        }
+        function confirmOccupy(id,result) {
+            if (id != null && result != null) {
+                $.ajax({
+                    type:"POST",
+                    url:"/occupy/confirm",
+                    data: {
+                        id: id,
+                        result: result
+                    },
+                    dataType:"json",
+                    success: function (msg) {
+                        if (msg.code != 0) {
+                            alert("审核失败");
+                        }
+                    }
+                });
+            }
+        }
+
+        layui.use('element', function(){
+            var element = layui.element;
+
+        });
+    </script>
+    <div class="layui-footer">
+        微机1603_刘常林 - NEAU实验室管理系统
+    </div>
+</div>
+
+<script>
+    function load_data(){
+        var theme=localStorage.getItem("userName");
+        if(theme!=null||theme!=""){
+            // $("#userName").show();
+            $("#userName").html(theme);
+        }
+    }
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<script type="text/javascript">
+    var theme=localStorage.getItem("userName");
+    if(theme!=null||theme!=""){
+        $("#userName").html(theme);
+    }
+</script>
+
+</body>
+</html>
