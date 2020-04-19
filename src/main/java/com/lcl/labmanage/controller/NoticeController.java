@@ -40,4 +40,9 @@ public class NoticeController {
         return noticeService.addNotice(title, content, publisher);
     }
 
+    @PostMapping("/delete")
+    @ResponseBody
+    public Response deleteNotice(Integer id) {
+        return noticeService.deleteNotice(id);
+    }
 }

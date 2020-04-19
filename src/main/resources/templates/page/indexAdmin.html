@@ -54,11 +54,7 @@
                     <a href="/start/exper/log">实验日志</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;">日志管理</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="/start/log/preview">查看日志</a></dd>
-                        <dd><a href="/start/require/manage">需求管理</a></dd>
-                    </dl>
+                    <a href="/start/require/manage">设备报备管理</a>
                 </li>
                 <li class="layui-nav-item"><a href="/start/user/manage">用户管理</a></li>
             </ul>
@@ -75,6 +71,9 @@
 
 
     <div class="layui-body">
+        <blockquote class="layui-elem-quote layui-text">
+            <h1>公告列表</h1>
+        </blockquote>
         <div style="padding: 15px;">
                 <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
@@ -150,11 +149,10 @@
                 if(obj.event === 'del'){
                     layer.confirm('真的删除行么', function(index){
                         obj.del();
-                        deleteUser(data.id);
+                        deleteNotice(data.id);
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
-
                     $.ajax({
                         type:"GET",
                         url:"/notice/infos",
@@ -196,7 +194,7 @@
                 $("#userName").html(theme);
             }
         }
-        function deleteUser(id) {
+        function deleteNotice(id) {
             if (id != null) {
                 $.ajax({
                     type:"POST",

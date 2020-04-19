@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcl.labmanage.dao.LabLogMapper">
+
+    <select id="getAllLabLogByPage" resultType="com.lcl.labmanage.entity.LabLog">
+        SELECT
+        *
+        from lab_log
+        limit #{page},#{size}
+    </select>
+
+    <select id="getCountOfLabLog" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from lab_log
+    </select>
+</mapper>

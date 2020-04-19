@@ -54,9 +54,19 @@ public class ToPageController {
     public String jumpToLabOccupyInfos() {
         return "page/labOccupyInfos";
     }
+
     @GetMapping("/lab/equip")
     public String jumpToLabEquip() {
         return "page/labEquipment";
     }
 
+    @GetMapping("/exper/log")
+    public String jumpToLabLog() {
+        return "page/labLog";
+    }
+
+    @GetMapping("/require/manage")
+    public String jumpToRequireManage() {
+        return "page/reportManage";
+    }
 }

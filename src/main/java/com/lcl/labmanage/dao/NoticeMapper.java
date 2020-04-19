@@ -20,4 +20,6 @@ public interface NoticeMapper {
     Notice getNoticesById(Integer id);
 
     Boolean addNotice(Notice notice);
+
+    Boolean deleteNotice(Integer id);
 }

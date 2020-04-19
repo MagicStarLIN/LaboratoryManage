@@ -15,4 +15,6 @@ public interface LabService {
     Response addLab(Lab lab);
 
     Response deleteLab(Integer id);
+
+    Response getAllLabName();
 }

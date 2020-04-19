@@ -29,4 +29,8 @@
         values (#{title},#{noticeinfos},#{updatetime},#{publisher})
     </insert>
 
+    <delete id="deleteNotice" parameterType="java.lang.Integer">
+        delete from notices where id = #{id}
+    </delete>
+
 </mapper>

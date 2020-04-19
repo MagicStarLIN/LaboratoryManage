@@ -22,8 +22,24 @@
     </select>
 
     <insert id="addDevice" parameterType="com.lcl.labmanage.entity.Device">
-INSERT INTO `lab_manage`.`device`(`euipment_name`, `lab_name`, `total_count`, `broken_count`, `usable_count`, `updatetime`)
+INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `total_count`, `broken_count`, `usable_count`, `updatetime`)
  VALUES ( #{equipment_name}, #{lab_name}, #{total_count}, #{broken_count}, #{usable_count}, #{updatetime});
     </insert>
+
+    <update id="updateDevice" parameterType="com.lcl.labmanage.entity.Device">
+        UPDATE `lab_manage`.`device`
+         SET
+         `equipment_name` = #{equipment_name},
+         `lab_name` = #{lab_name},
+         `total_count` = #{total_count},
+         `broken_count` = #{broken_count},
+         `usable_count` = #{usable_count},
+         `updatetime` = #{updatetime}
+         WHERE `id` = #{id};
+    </update>
+
+    <select id="getDeviceByLabNameAndEquipName" resultType="com.lcl.labmanage.entity.Device">
+        select * from `lab_manage`.`device` where equipment_name = #{equipName} and lab_name = #{labName}
+    </select>
 
 </mapper>

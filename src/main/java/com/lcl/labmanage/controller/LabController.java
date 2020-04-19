@@ -39,4 +39,10 @@ public class LabController {
     public Response deleteLab(Integer id) {
         return labService.deleteLab(id);
     }
+
+    @GetMapping("/names")
+    @ResponseBody
+    public Response getAllName() {
+        return labService.getAllLabName();
+    }
 }

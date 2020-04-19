@@ -20,5 +20,11 @@ public interface DeviceMapper {
 
     Device getDeviceById(Integer id);
 
+    Device getDeviceByLabNameAndEquipName(@Param("labName") String labName, @Param("equipName") String equipName);
+
     Boolean addDevice(Device device);
+
+    Boolean updateDevice(Device device);
+
+
 }

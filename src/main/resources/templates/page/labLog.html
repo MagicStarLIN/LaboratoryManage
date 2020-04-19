@@ -18,16 +18,6 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="/start/index/admin">公告页面</a></li>
-            <!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
-            <!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="javascript:;">其它系统</a>-->
-            <!--                <dl class="layui-nav-child">-->
-            <!--                    <dd><a href="">邮件管理</a></dd>-->
-            <!--                    <dd><a href="">消息管理</a></dd>-->
-            <!--                    <dd><a href="">授权管理</a></dd>-->
-            <!--                </dl>-->
-            <!--            </li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -72,7 +62,7 @@
 
     <div class="layui-body">
         <blockquote class="layui-elem-quote layui-text">
-            <h1>实验室信息列表</h1>
+            <h1>实验日志</h1>
         </blockquote>
         <div style="padding: 15px;">
             <table class="layui-hide" id="test" lay-filter="test"></table>
@@ -84,12 +74,12 @@
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
             <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-            <button class="layui-btn layui-btn-sm"><a href="/start/lab/add">新增实验室</a> </button>
+            <button class="layui-btn layui-btn-sm"><a href="/start/labLog/add">填写日志</a> </button>
         </div>
     </script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">占用情况</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
     <script>
@@ -97,7 +87,7 @@
             var table = layui.table;
             table.render({
                 elem: '#test'
-                ,url:'/lab/list'
+                ,url:'/lab/log/list'
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                     title: '提示'
@@ -110,10 +100,12 @@
                     [
                         {type: 'checkbox', fixed: 'left'}
                         ,{field:'id',  title: 'ID', sort: true}
-                        ,{field:'labName', title: '实验室'}
-                        ,{field:'administrator', title: '管理员', sort: true}
-                        ,{field:'admin_contact', title: '管理员联系方式', sort: true}
-                        ,{field:'location', title: '地点', sort: true}
+                        ,{field:'lab', title: '实验室'}
+                        ,{field:'purpose', title: '实验室用途', sort: true}
+                        ,{field:'attendance', title: '出勤情况', sort: true}
+                        ,{field:'device', title: '设备情况', sort: true}
+                        ,{field:'user', title: '记录人', sort: true}
+                        ,{field:'contact', title: '记录人联系方式', sort: true}
                         ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
                     ]
                 ],
@@ -146,15 +138,44 @@
             //监听行工具事件
             table.on('tool(test)', function(obj){
                 var data = obj.data;
+                //console.log(obj)
                 if(obj.event === 'del'){
                     layer.confirm('真的删除行么', function(index){
                         obj.del();
-                        deleteLab(data.id);
+                        deleteLabLog(data.id);
                         layer.close(index);
                     });
                 } else if(obj.event === 'edit'){
-                    localStorage.setItem("labName", data.labName);
-                    window.location.href="/start/lab/occupy/infos"
+
+                    $.ajax({
+                        type:"GET",
+                        url:"/lab/log/edit",
+                        data: {
+                            id: data.id,
+                        },
+                        dataType:"json",
+                        success: function (msg) {
+                            if (msg.code == 0) {
+                                $('#notice_title').text(msg.data.title)
+                                $('#notice_content').text(msg.data.noticeinfos)
+                            } else {
+                                alert("发生异常");
+                            }
+                        }
+                    });
+
+                    //示范一个公告层
+                    layer.open({
+                        content:$('#window')
+                        ,type: 1
+                        ,area: ['800px', '800px']
+                        ,btn: ['确定', '取消']
+                        ,success: function(layero){
+
+                        }
+                    });
+
+
                 }
             });
         });
@@ -167,11 +188,11 @@
                 $("#userName").html(theme);
             }
         }
-        function deleteLab(id) {
+        function deleteLabLog(id) {
             if (id != null) {
                 $.ajax({
                     type:"POST",
-                    url:"/lab/delete",
+                    url:"/lab/log/delete",
                     data: {
                         id: id,
                     },
@@ -195,25 +216,25 @@
     </div>
 </div>
 
-    <script>
-        function load_data(){
-            var theme=localStorage.getItem("userName");
-            if(theme!=null||theme!=""){
-                // $("#userName").show();
-                $("#userName").html(theme);
-            }
-        }
-        layui.use('element', function(){
-            var element = layui.element;
-
-        });
-    </script>
-    <script type="text/javascript">
+<script>
+    function load_data(){
         var theme=localStorage.getItem("userName");
         if(theme!=null||theme!=""){
+            // $("#userName").show();
             $("#userName").html(theme);
         }
-    </script>
+    }
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<script type="text/javascript">
+    var theme=localStorage.getItem("userName");
+    if(theme!=null||theme!=""){
+        $("#userName").html(theme);
+    }
+</script>
 
 </body>
 </html>

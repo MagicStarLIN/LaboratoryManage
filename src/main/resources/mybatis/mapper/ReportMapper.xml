@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcl.labmanage.dao.ReportMapper">
+
+    <select id="getAllRecordByPage" resultType="com.lcl.labmanage.entity.ReportRecord">
+        SELECT
+        *
+        from report_log
+        limit #{page},#{size}
+    </select>
+
+    <select id="getCountOfRecord" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from report_log
+    </select>
+
+    <insert id="insertNewRecord" parameterType="com.lcl.labmanage.entity.ReportRecord">
+        INSERT INTO `lab_manage`.`report_log`
+        ( `lab`, `cat`, `device`, `amount`, `reporter`, `reporter_contact`, `state`,`note`)
+        VALUES
+        (#{lab}, #{cat}, #{device}, #{amount}, #{reporter}, #{reporter_contact}, #{state}, #{note});
+    </insert>
+
+</mapper>

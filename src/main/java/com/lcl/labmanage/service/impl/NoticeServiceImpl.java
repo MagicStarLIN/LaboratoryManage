@@ -46,4 +46,9 @@ public class NoticeServiceImpl implements NoticeService {
         }
     }
 
+    @Override
+    public Response deleteNotice(Integer id) {
+        return Response.success(noticeMapper.deleteNotice(id));
+    }
+
 }

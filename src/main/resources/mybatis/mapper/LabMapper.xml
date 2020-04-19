@@ -29,4 +29,9 @@
     <delete id="deleteLab">
         delete from lab_infos where id = #{id}
     </delete>
+
+    <select id="getAllLabName" resultType="java.lang.String">
+        select labname from lab_infos
+    </select>
+
 </mapper>
