@@ -54,12 +54,18 @@
         </div>
     </div>
     <div class="site-text" style="margin: 5%; display: none" id="window"  target="test123">
-        <div class="layui-card">
-            <div class="layui-card-header" id="notice_title">标题</div>
-            <div class="layui-card-body" id="notice_content">
-                内容
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">出勤情况</label>
+            <div class="layui-input-block">
+                <textarea id="attendacne" placeholder="请输入出勤情况" class="layui-textarea"></textarea>
             </div>
         </div>
+        <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">设备情况</label>
+        <div class="layui-input-block">
+            <textarea id="device_condition" placeholder="请输入设备情况" class="layui-textarea"></textarea>
+        </div>
+    </div>
     </div>
 
 
@@ -77,12 +83,11 @@
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
             <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-            <button class="layui-btn layui-btn-sm"><a href="/start/labLog/add">填写日志</a> </button>
         </div>
     </script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
     <script type="text/html" id="barDemo">
-        <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-xs" lay-event="edit_log">填写</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
     </script>
     <script>
@@ -148,35 +153,42 @@
                         deleteLabLog(data.id);
                         layer.close(index);
                     });
-                } else if(obj.event === 'edit'){
-
-                    $.ajax({
-                        type:"GET",
-                        url:"/lab/log/edit",
-                        data: {
-                            id: data.id,
-                        },
-                        dataType:"json",
-                        success: function (msg) {
-                            if (msg.code == 0) {
-                                $('#notice_title').text(msg.data.title)
-                                $('#notice_content').text(msg.data.noticeinfos)
-                            } else {
-                                alert("发生异常");
-                            }
-                        }
-                    });
-
+                } else if(obj.event === 'edit_log'){
+                    $('#attendacne').text(data.attendance == null ? "" : data.attendance);
+                    $('#device_condition').text(data.device == null ? "" : data.device);
                     //示范一个公告层
                     layer.open({
                         content:$('#window')
                         ,type: 1
                         ,area: ['800px', '800px']
                         ,btn: ['确定', '取消']
-                        ,success: function(layero){
-
+                        ,yes: function(layero){
+                            //todo 判空操作
+                            let attendance = $('#attendacne').val();
+                            let device = $('#device_condition').val()
+                            $.ajax({
+                                type:"POST",
+                                url:"/lab/log/edit",
+                                data: {
+                                    id: data.id,
+                                    attendance: attendance,
+                                    device: device
+                                },
+                                dataType:"json",
+                                success: function (msg) {
+                                    if (msg.code == 0) {
+                                        location.reload();
+                                    } else {
+                                        layer.msg(msg.msg)
+                                    }
+                                }
+                            });
                         }
                     });
+
+
+
+
 
 
                 }

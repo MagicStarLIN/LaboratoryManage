@@ -7,6 +7,9 @@
         VALUES
         (#{occupy_id},#{lab}, #{purpose}, #{attendance}, #{device}, #{user}, #{contact});
     </insert>
+    <update id="updateLabLogById">
+        update lab_log set attendance = #{attendance},device = #{device} where id = #{id}
+    </update>
     <delete id="deleteLabLog" parameterType="java.lang.Integer">
         delete from lab_log where id = #{id}
 

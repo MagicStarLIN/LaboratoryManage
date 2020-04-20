@@ -17,4 +17,8 @@ public interface ReportMapper {
     Integer getCountOfRecord();
 
     Boolean insertNewRecord(ReportRecord reportRecord);
+
+    Boolean updateStateById(@Param("state") String state,@Param("id") Integer id);
+
+    ReportRecord getRecordById(Integer id);
 }

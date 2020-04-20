@@ -33,4 +33,10 @@ public class LabLogController {
     public Response deleteLabLog(Integer id) {
         return labLogService.deleteLabLog(id);
     }
+
+    @PostMapping("/edit")
+    @ResponseBody
+    public Response editLabLog(Integer id, String attendance, String device) {
+        return labLogService.editLabLog(id, attendance, device);
+    }
 }

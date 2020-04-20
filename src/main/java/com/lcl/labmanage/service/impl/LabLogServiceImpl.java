@@ -26,4 +26,10 @@ public class LabLogServiceImpl implements LabLogService {
     public Response deleteLabLog(Integer id) {
         return Response.success(labLogMapper.deleteLabLog(id));
     }
+
+    @Override
+    public Response editLabLog(Integer id, String attendance, String device) {
+        return Response.success(labLogMapper.updateLabLogById(id, attendance, device));
+    }
+
 }

@@ -143,14 +143,25 @@
             table.on('tool(test)', function(obj){
                 var data = obj.data;
                 //console.log(obj)
-                if(obj.event === 'finsh'){
-                    layer.confirm('真的删除行么', function(index){
-                        obj.del();
-                        finishReport(data.id);
+                if(obj.event === 'finish'){
+                        $.ajax({
+                            type:"GET",
+                            url:"/report/finish",
+                            data: {
+                                id: data.id
+                            },
+                            dataType:"json",
+                            success: function (msg) {
+                                if (msg.code == 0) {
+                                    location.reload();
+                                } else {
+                                    layer.msg(msg.msg)
+                                }
+                            }
+                        });
                         layer.close(index);
-                    });
-                } else if(obj.event === 'check'){
 
+                } else if(obj.event === 'check'){
                     $.ajax({
                         type:"GET",
                         url:"/report/checked",
@@ -160,25 +171,13 @@
                         dataType:"json",
                         success: function (msg) {
                             if (msg.code == 0) {
-                                $('#notice_title').text(msg.data.title)
-                                $('#notice_content').text(msg.data.noticeinfos)
+                                location.reload()
                             } else {
-                                alert("发生异常");
+                                layer.msg(msg.msg)
+
                             }
                         }
                     });
-
-                    //示范一个公告层
-                    layer.open({
-                        content:$('#window')
-                        ,type: 1
-                        ,area: ['800px', '800px']
-                        ,btn: ['确定', '取消']
-                        ,success: function(layero){
-
-                        }
-                    });
-
 
                 }
             });
@@ -194,19 +193,7 @@
         }
         function finishReport(id) {
             if (id != null) {
-                $.ajax({
-                    type:"POST",
-                    url:"/report/finsh",
-                    data: {
-                        id: id,
-                    },
-                    dataType:"json",
-                    success: function (msg) {
-                        if (msg.code != 0) {
-                            alert("删除失败");
-                        }
-                    }
-                });
+
             }
         }
 

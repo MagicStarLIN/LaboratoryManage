@@ -6,4 +6,6 @@ public interface LabLogService {
     Response getAllLabLog(Integer page, Integer limit);
 
     Response deleteLabLog(Integer id);
+
+    Response editLabLog(Integer id, String attendance, String device);
 }

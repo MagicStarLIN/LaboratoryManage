@@ -58,4 +58,35 @@ public class ReportServiceImpl implements ReportService {
         }
         return Response.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
     }
+
+    @Override
+    public Response checkReport(Integer id) {
+        return Response.success(reportMapper.updateStateById("已受理", id));
+    }
+
+    @Override
+    public Response finishReport(Integer id){
+        ReportRecord reportRecord = reportMapper.getRecordById(id);
+        Device device = deviceMapper.getDeviceByLabNameAndEquipName(reportRecord.getLab(), reportRecord.getDevice());
+        if ("报修".equals(reportRecord.getCat())) {
+            if (reportRecord.getAmount() > device.getBroken_count()) {
+                return Response.error(ResultCode.ILLEGAL_COUNT.getCode(), ResultCode.ILLEGAL_COUNT.getMsg());
+            }
+            device.setBroken_count(device.getBroken_count() - reportRecord.getAmount());
+            device.setUsable_count(device.getUsable_count() + reportRecord.getAmount());
+            reportMapper.updateStateById("已完成", id);
+            return Response.success(deviceMapper.updateDevice(device));
+        } else if ("添置".equals(reportRecord.getCat())) {
+            device.setTotal_count(device.getTotal_count() + reportRecord.getAmount());
+            device.setUsable_count(device.getUsable_count() + reportRecord.getAmount());
+            reportMapper.updateStateById("已完成", id);
+            return Response.success(deviceMapper.updateDevice(device));
+        } else {
+            reportMapper.updateStateById("已完成", id);
+            return Response.success(true);
+        }
+
+    }
+
+
 }

@@ -33,4 +33,16 @@ public class ReportController {
     public Response handleReport(ReportReq reportReq) {
         return reportService.handleReport(reportReq);
     }
+
+    @GetMapping("/checked")
+    @ResponseBody
+    public Response checkReport(Integer id) {
+        return reportService.checkReport(id);
+    }
+
+    @GetMapping("/finish")
+    @ResponseBody
+    public Response finishReport(Integer id) {
+        return reportService.finishReport(id);
+    }
 }

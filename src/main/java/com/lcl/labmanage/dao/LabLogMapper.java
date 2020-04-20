@@ -16,4 +16,6 @@ public interface LabLogMapper {
     Boolean deleteLabLog(Integer id);
 
     LabLog getLabLogByOccupyId(Integer occupyId);
+
+    Boolean updateLabLogById(@Param("id") Integer id, @Param("attendance") String attendance, @Param("device") String device);
 }
