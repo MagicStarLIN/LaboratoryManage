@@ -182,28 +182,29 @@
                             ,area: ['600px', '400px']
                             ,btn: ['确定', '取消']
                             ,yes: function(layero){
-                                //todo 判空操作
                                 let deviceName = $('#device_name').val();
                                 let labName = $('#labName').val();
                                 let amount = $('#new_amount').val();
-                                $.ajax({
-                                    type:"POST",
-                                    url:"/device/add",
-                                    data: {
-                                        equipment_name: deviceName,
-                                        lab_name: labName,
-                                        total_count: amount
+                                if (deviceAddIsNotNull()) {
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"/device/add",
+                                        data: {
+                                            equipment_name: deviceName,
+                                            lab_name: labName,
+                                            total_count: amount
 
-                                    },
-                                    dataType:"json",
-                                    success: function (msg) {
-                                        if (msg.code == 0) {
-                                            location.reload();
-                                        } else {
-                                            layer.msg(msg.msg);
+                                        },
+                                        dataType:"json",
+                                        success: function (msg) {
+                                            if (msg.code == 0) {
+                                                location.reload();
+                                            } else {
+                                                layer.msg(msg.msg);
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
                             }
                         });
 
@@ -225,32 +226,33 @@
                         ,area: ['850px', '600px']
                         ,btn: ['确定', '取消']
                         ,yes: function(layero){
-                            //todo 判空操作
                             let cat = $('#report_cat').val();
                             let amount = $('#report_amount').val();
                             let note = $('#report_note').val();
                             let reporter = $('#report_repoter').val();
                             let reporter_contact = $('#report_repoter_contact').val();
-                            $.ajax({
-                                type:"POST",
-                                url:"/report/repor",
-                                data: {
-                                    id: data.id,
-                                    cat: cat,
-                                    amount: amount,
-                                    note: note,
-                                    reporter: reporter,
-                                    reporter_contact: reporter_contact
-                                },
-                                dataType:"json",
-                                success: function (msg) {
-                                    if (msg.code == 0) {
-                                        location.reload();
-                                    } else {
-                                        layer.msg(msg.msg);
+                            if (reporIsNotNull()) {
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/report/repor",
+                                    data: {
+                                        id: data.id,
+                                        cat: cat,
+                                        amount: amount,
+                                        note: note,
+                                        reporter: reporter,
+                                        reporter_contact: reporter_contact
+                                    },
+                                    dataType:"json",
+                                    success: function (msg) {
+                                        if (msg.code == 0) {
+                                            location.reload();
+                                        } else {
+                                            layer.msg(msg.msg);
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
                     });
 
@@ -258,7 +260,51 @@
                 }
             });
         });
+        function reporIsNotNull() {
+            let cat = $('#report_cat').val();
+            let amount = $('#report_amount').val();
+            let reporter = $('#report_repoter').val();
+            let reporter_contact = $('#report_repoter_contact').val();
+            if (cat == null || "" == cat) {
+                layer.msg('请输入类别');
+                return false;
+            }
+            if (amount == null || "" == amount) {
+                layer.msg('请输入数量');
+                return false;
+            }
 
+            if (reporter == null || "" == reporter) {
+                layer.msg('请输入报备人');
+                return false;
+            }
+            if (reporter_contact == null || "" == reporter_contact) {
+                layer.msg('请输入联系方式');
+                return false;
+            }
+
+
+            return true;
+
+        }
+        function deviceAddIsNotNull() {
+            let deviceName = $('#device_name').val();
+            let labName = $('#labName').val();
+            let amount = $('#new_amount').val();
+            if (deviceName == null || "" == deviceName) {
+                layer.msg('请输入设备名');
+                return false;
+            }
+            if (labName == null || "" == labName) {
+                layer.msg('请输入实验室');
+                return false;
+            }
+            if (amount == null || "" == amount) {
+                layer.msg('请输入数量')
+            }
+            return true;
+
+        }
         //JavaScript代码区域
 
         function load_data(){
