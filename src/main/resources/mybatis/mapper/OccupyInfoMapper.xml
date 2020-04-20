@@ -25,6 +25,26 @@
         where lab = #{labName} and end_time > #{time} and state != '不准许'
     </select>
 
+    <select id="getOccupyInfosById" resultType="com.lcl.labmanage.entity.LabOccupyRecord"
+        parameterType="java.lang.Integer">
+
+        SELECT
+        *
+        from lab_occupy_log
+        where id = #{id}
+    </select>
+    <select id="getLabOccupyRecordByPage" resultType="com.lcl.labmanage.entity.LabOccupyRecord">
+        SELECT
+        *
+        from lab_occupy_log
+        limit #{page},#{size}
+    </select>
+    <select id="getCountOfOccupyRecord" resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from lab_occupy_log
+    </select>
+
     <insert id="insertNewOccupyRecord" parameterType="com.lcl.labmanage.entity.LabOccupyRecord">
         INSERT INTO `lab_manage`.`lab_occupy_log`
         (`lab`, `purpose`, `reason`, `user`, `user_contact`, `start_time`, `end_time`, `state`, `note`)

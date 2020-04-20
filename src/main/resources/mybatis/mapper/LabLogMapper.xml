@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lcl.labmanage.dao.LabLogMapper">
+    <insert id="insertNewLabLog" parameterType="com.lcl.labmanage.entity.LabLog">
+        INSERT INTO `lab_manage`.`lab_log`
+        (`occupy_id` `lab`, `purpose`, `attendance`, `device`, `user`, `contact`)
+        VALUES
+        (#{occupy_id},#{lab}, #{purpose}, #{attendance}, #{device}, #{user}, #{contact});
+    </insert>
+    <delete id="deleteLabLog" parameterType="java.lang.Integer">
+        delete from lab_log where id = #{id}
+
+    </delete>
 
     <select id="getAllLabLogByPage" resultType="com.lcl.labmanage.entity.LabLog">
         SELECT
@@ -14,4 +24,11 @@
         count(*)
         from lab_log
     </select>
+    <select id="getLabLogByOccupyId" resultType="com.lcl.labmanage.entity.LabLog">
+        SELECT
+        *
+        from lab_log
+        where occupy_id = #{occupyId}
+    </select>
+
 </mapper>

@@ -18,16 +18,6 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="/start/index/admin">公告页面</a></li>
-            <!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
-            <!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
-            <!--            <li class="layui-nav-item">-->
-            <!--                <a href="javascript:;">其它系统</a>-->
-            <!--                <dl class="layui-nav-child">-->
-            <!--                    <dd><a href="">邮件管理</a></dd>-->
-            <!--                    <dd><a href="">消息管理</a></dd>-->
-            <!--                    <dd><a href="">授权管理</a></dd>-->
-            <!--                </dl>-->
-            <!--            </li>-->
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
@@ -124,7 +114,6 @@
             <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
             <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
             <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
-            <button class="layui-btn layui-btn-sm" lay-event="applyFor">申请占用</button>
         </div>
     </script>
     <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
@@ -149,14 +138,14 @@
     </script>
     <script>
         var name = localStorage.getItem("labName")
-        $('#title-block').text(name + '占用情况')
+        $('#title-block').text('实验室占用情况')
         layui.use('table', function(){
             // var name = localStorage.getItem("labName")
             localStorage.removeItem("labName")
             var table = layui.table;
             table.render({
                 elem: '#test'
-                ,url:'/occupy/infos?labName=' + name
+                , url: '/occupy/infos/total'
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                     title: '提示'

@@ -8,9 +8,15 @@ import java.util.List;
 
 public interface OccupyInfoMapper {
 
+    List<LabOccupyRecord> getLabOccupyRecordByPage(@Param("page") Integer page, @Param("size") Integer size);
+
+    Integer getCountOfOccupyRecord();
+
     List<LabOccupyRecord> getLabOccupyRecordByName(String labName);
 
     Integer getCountOfOccupyInfosByName(String labName);
+
+    LabOccupyRecord getOccupyInfosById(Integer id);
 
     Integer getCountOfOccupyInfosByTime(@Param("labName") String labName, @Param("time") String time);
 

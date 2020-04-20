@@ -28,6 +28,12 @@ public class OccupyController {
         return occupyLabService.getAllOccupyInfosByLabName(labName);
     }
 
+    @GetMapping("/infos/total")
+    @ResponseBody
+    public Response getOccupyInfos(Integer page, Integer limit) {
+        return occupyLabService.getAllOccupyInfosByPage(page, limit);
+    }
+
     @PostMapping("apply/for")
     @ResponseBody
     public Response applyForLab(LabOccupyRecord labOccupyRecord) {

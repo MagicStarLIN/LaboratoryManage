@@ -12,6 +12,7 @@ import lombok.Data;
 @Data
 public class LabLog {
     private Integer id;
+    private Integer occupy_id;
     private String lab;
     private String purpose;
     private String attendance;

@@ -19,6 +19,11 @@ public class LabLogServiceImpl implements LabLogService {
 
     @Override
     public Response getAllLabLog(Integer page, Integer limit) {
-        return Response.success(labLogMapper.getAllLabLogByPage((page - 1) * limit, limit));
+        return Response.success(labLogMapper.getAllLabLogByPage((page - 1) * limit, limit), labLogMapper.getCountOfLabLog());
+    }
+
+    @Override
+    public Response deleteLabLog(Integer id) {
+        return Response.success(labLogMapper.deleteLabLog(id));
     }
 }

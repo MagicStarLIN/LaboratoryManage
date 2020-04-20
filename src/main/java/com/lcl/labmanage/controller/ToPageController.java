@@ -69,4 +69,9 @@ public class ToPageController {
     public String jumpToRequireManage() {
         return "page/reportManage";
     }
+
+    @GetMapping("/exper/occupy")
+    public String jumpToExperOccupy() {
+        return "page/ALLlabOccupyInfos";
+    }
 }

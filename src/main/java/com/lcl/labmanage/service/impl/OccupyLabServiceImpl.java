@@ -1,6 +1,8 @@
 package com.lcl.labmanage.service.impl;
 
+import com.lcl.labmanage.dao.LabLogMapper;
 import com.lcl.labmanage.dao.OccupyInfoMapper;
+import com.lcl.labmanage.entity.LabLog;
 import com.lcl.labmanage.entity.LabOccupyRecord;
 import com.lcl.labmanage.entity.Response;
 import com.lcl.labmanage.entity.ResultCode;
@@ -18,6 +20,13 @@ import org.springframework.stereotype.Service;
 public class OccupyLabServiceImpl implements OccupyLabService {
     @Autowired
     private OccupyInfoMapper occupyInfoMapper;
+    @Autowired
+    private LabLogMapper labLogMapper;
+
+    @Override
+    public Response getAllOccupyInfosByPage(Integer page, Integer limit) {
+        return Response.success(occupyInfoMapper.getLabOccupyRecordByPage((page - 1) * limit, limit), occupyInfoMapper.getCountOfOccupyRecord());
+    }
 
     @Override
     public Response getAllOccupyInfosByLabName(String labName) {
@@ -40,6 +49,29 @@ public class OccupyLabServiceImpl implements OccupyLabService {
 
     @Override
     public Response confirmApply(Integer id, String result) {
-        return Response.success(occupyInfoMapper.updateStateById(id, result));
+        LabOccupyRecord occupyRecord = occupyInfoMapper.getOccupyInfosById(id);
+        if (occupyRecord.getState().equals(result)) {
+            return Response.success(true);
+        }
+        if (result.equals("准许")) {
+            LabLog labLog = new LabLog();
+            labLog.setPurpose(occupyRecord.getPurpose());
+            labLog.setOccupy_id(id);
+            labLog.setLab(occupyRecord.getLab());
+            labLog.setUser(occupyRecord.getUser());
+            labLog.setContact(occupyRecord.getUser_contact());
+            labLogMapper.insertNewLabLog(labLog);
+        }
+        if (result.equals("不准许")) {
+            LabLog labLog = labLogMapper.getLabLogByOccupyId(id);
+            if (labLog != null) {
+                labLogMapper.deleteLabLog(labLog.getId());
+            }
+        }
+
+        boolean flag = occupyInfoMapper.updateStateById(id, result);
+        System.err.println("修改为"+flag);
+        return Response.success(flag);
     }
+
 }

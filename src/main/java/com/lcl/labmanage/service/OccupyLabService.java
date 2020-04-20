@@ -10,6 +10,8 @@ import com.lcl.labmanage.entity.Response;
  * @date 2020/4/18 11:43 下午
  */
 public interface OccupyLabService {
+    Response getAllOccupyInfosByPage(Integer page, Integer limit);
+
     Response getAllOccupyInfosByLabName(String labName);
 
     Response applyForLab(LabOccupyRecord labOccupyRecord);
