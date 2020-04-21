@@ -63,12 +63,12 @@
                 <option value="其他">其他</option>
             </select>
         </div>
-            <br><br>
-            <label class="layui-form-label">数量</label>
-            <div class="layui-input-block">
-                <input id="report_amount" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入数量" class="layui-input">
-            </div>
-            <br><br>
+        <br><br>
+        <label class="layui-form-label">数量</label>
+        <div class="layui-input-block">
+            <input id="report_amount" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入数量" class="layui-input">
+        </div>
+        <br><br>
         <label class="layui-form-label">报备人</label>
         <div class="layui-input-block">
             <input id="report_repoter" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入报备人" class="layui-input">
@@ -79,19 +79,19 @@
             <input id="report_repoter_contact" type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入报备人联系方式" class="layui-input">
         </div>
         <br><br>
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <textarea id="report_note" placeholder="请输入内容" class="layui-textarea"></textarea>
-            </div>
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea id="report_note" placeholder="请输入内容" class="layui-textarea"></textarea>
         </div>
+    </div>
 
     <div class="site-text" style="margin: 5%; display: none" id="device_add"  target="test123">
         <div class="layui-input-block">
             <label class="layui-form-label">实验室</label>
             <div class="layui-input-block">
                 <select id="labName" name="interest" lay-filter="aihao">
-                <option value="">请选择实验室</option>
-            </select>
+                    <option value="">请选择实验室</option>
+                </select>
             </div>
             <br><br>
             <label class="layui-form-label">设备名称</label>
@@ -134,11 +134,14 @@
     </script>
 
     <script>
+        var name = localStorage.getItem("labName")
+
         layui.use('table', function(){
             var table = layui.table;
+            localStorage.removeItem("labName")
             table.render({
                 elem: '#test'
-                ,url:'/device/list'
+                ,url:'/device/equipments?name='+ name
                 ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
                     title: '提示'

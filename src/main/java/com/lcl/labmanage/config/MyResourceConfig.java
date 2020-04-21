@@ -18,7 +18,8 @@ public class MyResourceConfig extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
 
         registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
-
+        registry.addResourceHandler("/myResource/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/myResource/");
+        registry.addResourceHandler("/static/**").addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/static/");
         super.addResourceHandlers(registry);
 
     }

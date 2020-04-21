@@ -76,6 +76,8 @@
         <div style="padding: 15px;">
             <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
+        <img src="/js/timg.jpg" style="position:absolute;right:0;bottom:0; width: 200px;height: 200px"/>
+
     </div>
     <script src="/lib/layui/layui.js"></script>
     <script type="text/html" id="toolbarDemo">
@@ -109,7 +111,7 @@
                         {type: 'checkbox', fixed: 'left'}
                         ,{field:'id',  title: 'ID', sort: true}
                         ,{field:'lab', title: '实验室'}
-                        ,{field:'purpose', title: '实验室用途', sort: true}
+                        ,{field:'reason', title: '实验室用途', sort: true}
                         ,{field:'attendance', title: '出勤情况', sort: true}
                         ,{field:'device', title: '设备情况', sort: true}
                         ,{field:'user', title: '记录人', sort: true}
@@ -163,34 +165,29 @@
                         ,area: ['800px', '800px']
                         ,btn: ['确定', '取消']
                         ,yes: function(layero){
-                            //todo 判空操作
-                            let attendance = $('#attendacne').val();
-                            let device = $('#device_condition').val()
-                            $.ajax({
-                                type:"POST",
-                                url:"/lab/log/edit",
-                                data: {
-                                    id: data.id,
-                                    attendance: attendance,
-                                    device: device
-                                },
-                                dataType:"json",
-                                success: function (msg) {
-                                    if (msg.code == 0) {
-                                        location.reload();
-                                    } else {
-                                        layer.msg(msg.msg)
+                            if (isNotNullField()) {
+                                let attendance = $('#attendacne').val();
+                                let device = $('#device_condition').val()
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/lab/log/edit",
+                                    data: {
+                                        id: data.id,
+                                        attendance: attendance,
+                                        device: device
+                                    },
+                                    dataType:"json",
+                                    success: function (msg) {
+                                        if (msg.code == 0) {
+                                            location.reload();
+                                        } else {
+                                            layer.msg(msg.msg)
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
                     });
-
-
-
-
-
-
                 }
             });
         });
@@ -202,6 +199,20 @@
             if(theme!=null||theme!=""){
                 $("#userName").html(theme);
             }
+        }
+        function judageIsNotNull() {
+            let attendance = $('#attendacne').val();
+            let device = $('#device_condition').val()
+            if (attendance == null || attendance === "") {
+                layer.msg('请输入出勤情况')
+                return false;
+            }
+            if (device == null || device === "") {
+                layer.msg('请输入设备情况')
+                return false;
+            }
+
+            return true;
         }
         function deleteLabLog(id) {
             if (id != null) {

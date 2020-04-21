@@ -1,7 +1,6 @@
 package com.lcl.labmanage.dao;
 
 import com.lcl.labmanage.entity.LabOccupyRecord;
-import com.lcl.labmanage.entity.Response;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public interface OccupyInfoMapper {
 
     LabOccupyRecord getOccupyInfosById(Integer id);
 
-    Integer getCountOfOccupyInfosByTime(@Param("labName") String labName, @Param("time") String time);
+    Integer getCountOfOccupyInfosByTime(@Param("term") String term, @Param("labName") String labName, @Param("time") Integer time,@Param("specific_time")String specific_time);
 
     Boolean insertNewOccupyRecord(LabOccupyRecord labOccupyRecord);
 

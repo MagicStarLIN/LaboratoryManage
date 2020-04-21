@@ -5,8 +5,8 @@ spring:
   thymeleaf:
     prefix: classpath:/templates/
     cache: false
-#  mvc:
-#    static-path-pattern: /static/**
+  mvc:
+    static-path-pattern: /static/**
   datasource:
     first:
       username: root

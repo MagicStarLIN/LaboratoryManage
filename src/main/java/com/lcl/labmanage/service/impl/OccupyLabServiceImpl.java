@@ -40,7 +40,7 @@ public class OccupyLabServiceImpl implements OccupyLabService {
     @Override
     public Response applyForLab(LabOccupyRecord labOccupyRecord) {
         labOccupyRecord.setState("待审批");
-        if (occupyInfoMapper.getCountOfOccupyInfosByTime(labOccupyRecord.getLab(), labOccupyRecord.getEnd_time()) != 0) {
+        if (occupyInfoMapper.getCountOfOccupyInfosByTime(labOccupyRecord.getTerm(),labOccupyRecord.getLab(), labOccupyRecord.getEnd_week(),labOccupyRecord.getSpecific_time()) != 0) {
             return Response.error(ResultCode.AREADY_OCCUPIED.getCode(), ResultCode.AREADY_OCCUPIED.getMsg());
         } else {
             return Response.success(occupyInfoMapper.insertNewOccupyRecord(labOccupyRecord));
@@ -55,8 +55,8 @@ public class OccupyLabServiceImpl implements OccupyLabService {
         }
         if (result.equals("准许")) {
             LabLog labLog = new LabLog();
-            labLog.setPurpose(occupyRecord.getPurpose());
             labLog.setOccupy_id(id);
+            labLog.setReason(occupyRecord.getReason());
             labLog.setLab(occupyRecord.getLab());
             labLog.setUser(occupyRecord.getUser());
             labLog.setContact(occupyRecord.getUser_contact());

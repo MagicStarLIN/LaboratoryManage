@@ -60,6 +60,11 @@ public class ToPageController {
         return "page/labEquipment";
     }
 
+    @GetMapping("/lab/equip/lab")
+    public String jumpToLabEquipByLab() {
+        return "page/labEquipmentByLab";
+    }
+
     @GetMapping("/exper/log")
     public String jumpToLabLog() {
         return "page/labLog";

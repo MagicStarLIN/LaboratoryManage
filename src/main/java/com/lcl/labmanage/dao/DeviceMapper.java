@@ -27,4 +27,7 @@ public interface DeviceMapper {
     Boolean updateDevice(Device device);
 
 
+    Integer getCountOfDeviceByLab(String name);
+
+    List<Device> getAllDeviceByPageAndLab(@Param("name") String name, @Param("page") Integer page, @Param("size") Integer size);
 }

@@ -3,9 +3,9 @@
 <mapper namespace="com.lcl.labmanage.dao.LabLogMapper">
     <insert id="insertNewLabLog" parameterType="com.lcl.labmanage.entity.LabLog">
         INSERT INTO `lab_manage`.`lab_log`
-        (`occupy_id` `lab`, `purpose`, `attendance`, `device`, `user`, `contact`)
+        (`occupy_id`,`lab`, `reason`, `attendance`, `device`, `user`, `contact`)
         VALUES
-        (#{occupy_id},#{lab}, #{purpose}, #{attendance}, #{device}, #{user}, #{contact});
+        (#{occupy_id},#{lab}, #{reason}, #{attendance}, #{device}, #{user}, #{contact});
     </insert>
     <update id="updateLabLogById">
         update lab_log set attendance = #{attendance},device = #{device} where id = #{id}

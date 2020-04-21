@@ -107,6 +107,8 @@
         <div style="padding: 15px;">
             <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
+        <img src="/js/timg.jpg" style="position:absolute;right:0;bottom:0; width: 200px;height: 200px"/>
+
     </div>
     <script src="/lib/layui/layui.js"></script>
     <script type="text/html" id="toolbarDemo">
@@ -157,16 +159,16 @@
                 ,cols: [
                     [
                         {type: 'checkbox', fixed: 'left'}
-                        ,{field:'id',  title: 'ID', sort: true}
-                        ,{field:'lab', title: '实验室'}
-                        ,{field:'purpose', title: '用途', sort: true}
-                        ,{field:'reason', title: '具体用途', sort: true}
-                        ,{field:'user', title: '申请人', sort: true}
-                        ,{field:'user_contact', title: '申请人联系方式', sort: true}
-                        ,{field:'start_time', title: '占用起始时间', sort: true}
-                        ,{field:'end_time', title: '占用结束时间', sort: true}
-                        ,{field:'state', title: '申请结果', sort: true}
-                        ,{field:'note', title: '申请备注', sort: true}
+                        ,{field:'lab', title: '实验室',width:150}
+                        ,{field:'reason', title: '课程', width:140}
+                        ,{field:'class_name', title: '班级', width:100}
+                        ,{field:'user', title: '申请人', width:80}
+                        ,{field:'user_contact', title: '申请人联系方式',width:150}
+                        ,{field:'term', title: '学期', width:200}
+                        ,{field:'start_week', title: '起始周',width:90}
+                        ,{field:'end_week', title: '结束周', width:90}
+                        ,{field:'specific_time', title: '具体时间',width:150}
+                        ,{field:'state', title: '结果', width:80}
                         ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
                     ]
                 ],
@@ -188,46 +190,7 @@
                     case 'isAll':
                         layer.msg(checkStatus.isAll ? '全选': '未全选');
                         break;
-                    case "applyFor":
-                        layer.open({
-                            content:$('#window')
-                            ,type: 1
-                            ,area: ['800px', '800px']
-                            ,btn: ['确定', '取消']
-                            ,yes: function(layero){
-                                let labName = name;
-                                let purpose = $('#range').val();
-                                let reason = $('#reason').val();
-                                let user = localStorage.getItem("userName");
-                                let contact = $('#contact_method').val();
-                                let startTime = $('#start_time').val();
-                                let endTime = $('#end_time').val();
-                                let note = $('#note').val();
-                                $.ajax({
-                                    type:"POST",
-                                    url:"/occupy/apply/for",
-                                    data: {
-                                        lab: labName,
-                                        purpose: purpose,
-                                        reason: reason,
-                                        user: user,
-                                        user_contact: contact,
-                                        start_time: startTime,
-                                        end_time: endTime,
-                                        note: note
-                                    },
-                                    dataType:"json",
-                                    success: function (msg) {
-                                        if (msg.code == 0) {
-                                            localStorage.setItem("labName", name);
-                                            window.location.href="/start/lab/occupy/infos"
-                                        } else {
-                                            layer.msg(msg.msg);
-                                        }
-                                    }
-                                });
-                            }
-                        });
+
                 };
             });
 
@@ -238,7 +201,6 @@
                 if(obj.event === 'reject'){
                     layer.confirm('确认拒绝？', function(index){
                         var state1 = '不准许';
-
                         $.ajax({
                             type:"POST",
                             url:"/occupy/confirm",
@@ -248,17 +210,16 @@
                             },
                             dataType:"json",
                             success: function (msg) {
-                                if (msg.code != 0) {
-                                    alert("审核失败");
+                                if (msg.code == 0) {
+                                    location.reload();
+                                } else {
+                                    layer.msg(msg.msg)
                                 }
                             }
                         });
                         data.state = '不准许'
-
                         layer.close(index);
 
-                        localStorage.setItem("labName", name);
-                        window.location.href="/start/lab/occupy/infos"
                     });
                 }
                 if(obj.event === 'agree'){
@@ -273,17 +234,15 @@
                             },
                             dataType:"json",
                             success: function (msg) {
-                                if (msg.code != 0) {
-                                    alert("审核失败");
+                                if (msg.code == 0) {
+                                    location.reload();
+                                } else {
+                                    layer.msg(msg.msg)
                                 }
                             }
                         });
                         data.state = '不准许'
-
                         layer.close(index);
-
-                        localStorage.setItem("labName", name);
-                        window.location.href="/start/lab/occupy/infos"
                     });
 
                 }
@@ -298,6 +257,8 @@
                 $("#userName").html(theme);
             }
         }
+
+
 
         layui.use('element', function(){
             var element = layui.element;

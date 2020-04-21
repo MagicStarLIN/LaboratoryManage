@@ -41,5 +41,15 @@ INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `total_count`, `
     <select id="getDeviceByLabNameAndEquipName" resultType="com.lcl.labmanage.entity.Device">
         select * from `lab_manage`.`device` where equipment_name = #{equipName} and lab_name = #{labName}
     </select>
+    <select id="getCountOfDeviceByLab" resultType="java.lang.Integer" parameterType="java.lang.String">
+                select count(1) from device where lab_name = #{name}
+    </select>
+    <select id="getAllDeviceByPageAndLab" resultType="com.lcl.labmanage.entity.Device">
+        SELECT
+        *
+        from device
+        where lab_name = #{name}
+        limit #{page},#{size}
+    </select>
 
 </mapper>

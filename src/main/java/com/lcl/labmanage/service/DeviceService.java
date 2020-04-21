@@ -13,4 +13,6 @@ public interface DeviceService {
     Response getAllDevices(Integer page, Integer limit);
 
     Response addDevice(Device device);
+
+    Response getLabDevice(String name, Integer page, Integer limit);
 }

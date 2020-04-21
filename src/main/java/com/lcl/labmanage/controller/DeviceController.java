@@ -30,8 +30,13 @@ public class DeviceController {
     @PostMapping("/add")
     @ResponseBody
     public Response addNewDevice(Device device) {
-
         return deviceService.addDevice(device);
+    }
+
+    @GetMapping("/equipments")
+    @ResponseBody
+    public Response getLabDevice(String name, Integer page, Integer limit) {
+        return deviceService.getLabDevice(name, page, limit);
     }
 
 }

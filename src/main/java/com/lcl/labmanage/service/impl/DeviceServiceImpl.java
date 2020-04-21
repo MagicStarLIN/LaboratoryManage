@@ -38,4 +38,10 @@ public class DeviceServiceImpl implements DeviceService {
         return Response.success(deviceMapper.addDevice(device));
     }
 
+    @Override
+    public Response getLabDevice(String name, Integer page, Integer limit) {
+
+        return Response.success(deviceMapper.getAllDeviceByPageAndLab(name,(page - 1) * limit, limit),deviceMapper.getCountOfDeviceByLab(name));
+    }
+
 }
