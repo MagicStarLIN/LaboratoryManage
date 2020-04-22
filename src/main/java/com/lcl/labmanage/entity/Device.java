@@ -14,6 +14,8 @@ public class Device {
     private Integer id;
     private String equipment_name;
     private String lab_name;
+    private String purchase_date;
+    private String brand_model;
     private Integer total_count;
     private Integer broken_count;
     private Integer usable_count;

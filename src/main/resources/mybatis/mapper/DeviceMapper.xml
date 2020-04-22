@@ -22,8 +22,8 @@
     </select>
 
     <insert id="addDevice" parameterType="com.lcl.labmanage.entity.Device">
-INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `total_count`, `broken_count`, `usable_count`, `updatetime`)
- VALUES ( #{equipment_name}, #{lab_name}, #{total_count}, #{broken_count}, #{usable_count}, #{updatetime});
+INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `purchase_date`, `brand_model`, `total_count`, `broken_count`, `usable_count`, `updatetime`)
+ VALUES ( #{equipment_name}, #{`purchase_date`},#{brand_model},#{lab_name}, #{total_count}, #{broken_count}, #{usable_count}, #{updatetime});
     </insert>
 
     <update id="updateDevice" parameterType="com.lcl.labmanage.entity.Device">
@@ -31,6 +31,8 @@ INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `total_count`, `
          SET
          `equipment_name` = #{equipment_name},
          `lab_name` = #{lab_name},
+         `purchase_date` = #{purchase_date},
+         `brand_model` = #{brand_model},
          `total_count` = #{total_count},
          `broken_count` = #{broken_count},
          `usable_count` = #{usable_count},
@@ -50,6 +52,34 @@ INSERT INTO `lab_manage`.`device`(`equipment_name`, `lab_name`, `total_count`, `
         from device
         where lab_name = #{name}
         limit #{page},#{size}
+    </select>
+    <select id="getCountOfDeviceByParams" resultType="java.lang.Integer">
+        select
+        count(1)
+        from
+        device
+        <where>
+            <if test="equipment_name!=null">
+                and equipment_name = #{equipment_name}
+            </if>
+            <if test="purchase_date!=null">
+                and purchase_date = #{purchase_date}
+            </if>
+        </where>
+    </select>
+    <select id="getDevicesByParams" resultType="com.lcl.labmanage.entity.Device">
+        select
+        *
+        from
+        device
+        <where>
+            <if test="equipment_name!=null">
+                and equipment_name = #{equipment_name}
+            </if>
+            <if test="purchase_date!=null">
+                and purchase_date = #{purchase_date}
+            </if>
+        </where>
     </select>
 
 </mapper>

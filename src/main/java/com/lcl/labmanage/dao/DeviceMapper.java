@@ -30,4 +30,8 @@ public interface DeviceMapper {
     Integer getCountOfDeviceByLab(String name);
 
     List<Device> getAllDeviceByPageAndLab(@Param("name") String name, @Param("page") Integer page, @Param("size") Integer size);
+
+    Integer getCountOfDeviceByParams(@Param("purchase_date") String purchase_date, @Param("equipment_name") String equipment_name);
+
+    List<Device> getDevicesByParams(@Param("purchase_date") String purchase_date, @Param("equipment_name") String equipment_name);
 }

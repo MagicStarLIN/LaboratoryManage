@@ -15,4 +15,6 @@ public interface DeviceService {
     Response addDevice(Device device);
 
     Response getLabDevice(String name, Integer page, Integer limit);
+
+    Response getAllDevicesByParams(String purchase_date, String equipment_name);
 }

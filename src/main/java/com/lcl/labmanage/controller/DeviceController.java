@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class DeviceController {
     @Autowired
     private DeviceService deviceService;
+
     @GetMapping("/list")
     @ResponseBody
     public Response getAllDevice(Integer page, Integer limit) {
@@ -39,4 +40,9 @@ public class DeviceController {
         return deviceService.getLabDevice(name, page, limit);
     }
 
+    @GetMapping("query")
+    @ResponseBody
+    public Response getStatiscDevice(String purchase_date, String equipmentName) {
+        return deviceService.getAllDevicesByParams(purchase_date, equipmentName);
+    }
 }

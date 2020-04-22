@@ -112,9 +112,27 @@
         <blockquote class="layui-elem-quote layui-text">
             <h1>设备列表</h1>
         </blockquote>
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto" lay-filter="layadmin-useradmin-formlist">
+            <div class="layui-inline">
+                <label class="layui-form-label">设备名称：</label>
+                <div class="layui-input-inline">
+                    <input type="text" class="layui-input" id="equipment_name" name="name" placeholder="设备名称"  width="80px">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">采购年份</label>
+                <div class="layui-input-block">
+                    <input type="text" class="layui-input" id="purchase_date" name="name" placeholder="采购年份"  width="80px">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit="search_submits" lay-filter="reloadlst_submit" onclick=queryMethod()>查询</button>
+            </div>
+        </div>
         <div style="padding: 15px;">
             <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
+
         <img src="/js/timg.jpg" style="position:absolute;right:0;bottom:0; width: 200px;height: 200px"/>
 
     </div>
@@ -153,6 +171,8 @@
                         ,{field:'id',  title: 'ID', sort: true}
                         ,{field:'equipment_name', title: '设备名称'}
                         ,{field:'lab_name', title: '所属实验室', sort: true}
+                        ,{field:'purchase_date', title: '采购日期', sort: true}
+                        ,{field:'brand_model', title: '品牌型号', sort: true}
                         ,{field:'total_count', title: '总数', sort: true}
                         ,{field:'broken_count', title: '损坏数量', sort: true}
                         ,{field:'usable_count', title: '可用数量', sort: true}
@@ -318,23 +338,7 @@
                 $("#userName").html(theme);
             }
         }
-        function deleteUser(id) {
-            if (id != null) {
-                $.ajax({
-                    type:"POST",
-                    url:"/notice/delete",
-                    data: {
-                        id: id,
-                    },
-                    dataType:"json",
-                    success: function (msg) {
-                        if (msg.code != 0) {
-                            alert("删除失败");
-                        }
-                    }
-                });
-            }
-        }
+
 
         layui.use('element', function(){
             var element = layui.element;
@@ -358,6 +362,144 @@
         var element = layui.element;
 
     });
+    function queryMethod() {
+        var equipmentName = $('#equipment_name').val();
+        var purchase_date = $('#purchase_date').val();
+        layui.use('table', function(){
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                , url: '/device/query?equipmentName=' + equipmentName + '&purchase_date=' + purchase_date
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    ,layEvent: 'LAYTABLE_TIPS'
+                    ,icon: 'layui-icon-tips'
+                }]
+                ,title: '用户数据表'
+                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,cols: [
+                    [
+                        {type: 'checkbox', fixed: 'left'}
+                        ,{field:'id',  title: 'ID', sort: true}
+                        ,{field:'equipment_name', title: '设备名称'}
+                        ,{field:'lab_name', title: '所属实验室', sort: true}
+                        ,{field:'purchase_date', title: '采购年份', sort: true}
+                        ,{field:'brand_model', title: '品牌型号', sort: true}
+                        ,{field:'total_count', title: '总数', sort: true}
+                        ,{field:'broken_count', title: '损坏数量', sort: true}
+                        ,{field:'usable_count', title: '可用数量', sort: true}
+                        ,{field:'updatetime', title: '更新时间', sort: true}
+                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                    ]
+                ],
+                page:true
+            });
+
+
+            table.on('toolbar(test)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：'+ data.length + ' 个');
+                        break;
+                    case 'isAll':
+                        layer.msg(checkStatus.isAll ? '全选': '未全选');
+                        break;
+
+                    case 'addNewDevice':
+                        //示范一个公告层
+                        layer.open({
+                            content:$('#device_add')
+                            ,type: 1
+                            ,area: ['600px', '400px']
+                            ,btn: ['确定', '取消']
+                            ,yes: function(layero){
+                                let deviceName = $('#device_name').val();
+                                let labName = $('#labName').val();
+                                let amount = $('#new_amount').val();
+                                if (deviceAddIsNotNull()) {
+                                    $.ajax({
+                                        type:"POST",
+                                        url:"/device/add",
+                                        data: {
+                                            equipment_name: deviceName,
+                                            lab_name: labName,
+                                            total_count: amount
+
+                                        },
+                                        dataType:"json",
+                                        success: function (msg) {
+                                            if (msg.code == 0) {
+                                                location.reload();
+                                            } else {
+                                                layer.msg(msg.msg);
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+                        });
+
+                    // //自定义头工具栏右侧图标 - 提示
+                    // case 'LAYTABLE_TIPS':
+                    //     layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    //     break;
+                };
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+                let data = obj.data;
+                if(obj.event === 'report'){
+                    //示范一个公告层
+                    layer.open({
+                        content:$('#window')
+                        ,type: 1
+                        ,area: ['850px', '600px']
+                        ,btn: ['确定', '取消']
+                        ,yes: function(layero){
+                            let cat = $('#report_cat').val();
+                            let amount = $('#report_amount').val();
+                            let note = $('#report_note').val();
+                            let reporter = $('#report_repoter').val();
+                            let reporter_contact = $('#report_repoter_contact').val();
+                            if (reporIsNotNull()) {
+                                $.ajax({
+                                    type:"POST",
+                                    url:"/report/repor",
+                                    data: {
+                                        id: data.id,
+                                        cat: cat,
+                                        amount: amount,
+                                        note: note,
+                                        reporter: reporter,
+                                        reporter_contact: reporter_contact
+                                    },
+                                    dataType:"json",
+                                    success: function (msg) {
+                                        if (msg.code == 0) {
+                                            location.reload();
+                                        } else {
+                                            layer.msg(msg.msg);
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+
+                }
+            });
+        });
+
+    }
 </script>
 <script type="text/javascript">
     var theme=localStorage.getItem("userName");

@@ -6,6 +6,7 @@ import com.lcl.labmanage.entity.Response;
 import com.lcl.labmanage.entity.ResultCode;
 import com.lcl.labmanage.service.DeviceService;
 import com.lcl.labmanage.utils.DateUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,18 @@ public class DeviceServiceImpl implements DeviceService {
     public Response getLabDevice(String name, Integer page, Integer limit) {
 
         return Response.success(deviceMapper.getAllDeviceByPageAndLab(name,(page - 1) * limit, limit),deviceMapper.getCountOfDeviceByLab(name));
+    }
+
+    @Override
+    public Response getAllDevicesByParams(String purchase_date, String equipment_name) {
+        System.err.println(purchase_date + equipment_name);
+        if ("".equals(purchase_date)) {
+            purchase_date = null;
+        }
+        if ("".equals(equipment_name)) {
+            equipment_name = null;
+        }
+        return Response.success(deviceMapper.getDevicesByParams(purchase_date,equipment_name),deviceMapper.getCountOfDeviceByParams(purchase_date,equipment_name));
     }
 
 }
