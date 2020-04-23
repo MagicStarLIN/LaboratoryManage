@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>NEAU实验室管理</title>
+    <link rel="stylesheet" href = "/lib/layui/css/layui.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.include.js"></script>
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">
+            NEAU实验室
+        </div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="/start/index/user">公告页面</a></li>
+            <!--            <li class="layui-nav-item"><a href="">商品管理</a></li>-->
+            <!--            <li class="layui-nav-item"><a href="">用户</a></li>-->
+            <!--            <li class="layui-nav-item">-->
+            <!--                <a href="javascript:;">其它系统</a>-->
+            <!--                <dl class="layui-nav-child">-->
+            <!--                    <dd><a href="">邮件管理</a></dd>-->
+            <!--                    <dd><a href="">消息管理</a></dd>-->
+            <!--                    <dd><a href="">授权管理</a></dd>-->
+            <!--                </dl>-->
+            <!--            </li>-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;" id="userName">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+            </li>
+            <li class="layui-nav-item"><a href="/start/login">退出</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <ul class="layui-nav layui-nav-tree"  lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">实验室管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="/start/lab/user/info">实验室信息</a></dd>
+                        <dd><a href="/start/lab/user/equip">实验室设备管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/start/exper/occupy/user">实验室占用管理</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="/start/exper/log/user">实验日志</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <div class="site-text" style="margin: 5%; display: none" id="window"  target="test123">
+        <div class="layui-card">
+            <div class="layui-card-header" id="notice_title">标题</div>
+            <div class="layui-card-body" id="notice_content">
+                内容
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-body">
+        <blockquote class="layui-elem-quote layui-text">
+            <h1>实验室信息列表</h1>
+        </blockquote>
+        <div style="padding: 15px;">
+            <table class="layui-hide" id="test" lay-filter="test"></table>
+        </div>
+        <img src="/js/timg.jpg" style="position:absolute;right:0;bottom:0; width: 200px;height: 200px"/>
+
+    </div>
+    <script src="/lib/layui/layui.js"></script>
+    <script type="text/html" id="toolbarDemo">
+        <div class="layui-btn-container">
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+            <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+            <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+        </div>
+    </script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+    <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="edit">占用情况</a>
+        <a class="layui-btn layui-btn-xs" lay-event="equip">设备情况</a>
+    </script>
+    <script>
+        layui.use('table', function(){
+            var table = layui.table;
+            table.render({
+                elem: '#test'
+                ,url:'/lab/list'
+                ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '提示'
+                    ,layEvent: 'LAYTABLE_TIPS'
+                    ,icon: 'layui-icon-tips'
+                }]
+                ,title: '用户数据表'
+                ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+                ,cols: [
+                    [
+                        {type: 'checkbox', fixed: 'left'}
+                        ,{field:'id',  title: 'ID', sort: true}
+                        ,{field:'labName', title: '实验室'}
+                        ,{field:'administrator', title: '管理员', sort: true}
+                        ,{field:'admin_contact', title: '管理员联系方式', sort: true}
+                        ,{field:'location', title: '地点', sort: true}
+                        ,{fixed: 'right', title:'操作', toolbar: '#barDemo'}
+                    ]
+                ],
+                page:true
+            });
+
+
+            table.on('toolbar(test)', function(obj){
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch(obj.event){
+                    case 'getCheckData':
+                        var data = checkStatus.data;
+                        layer.alert(JSON.stringify(data));
+                        break;
+                    case 'getCheckLength':
+                        var data = checkStatus.data;
+                        layer.msg('选中了：'+ data.length + ' 个');
+                        break;
+                    case 'isAll':
+                        layer.msg(checkStatus.isAll ? '全选': '未全选');
+                        break;
+
+                    //自定义头工具栏右侧图标 - 提示
+                    case 'LAYTABLE_TIPS':
+                        layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                        break;
+                };
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function(obj){
+                var data = obj.data;
+                if(obj.event === 'del'){
+                    layer.confirm('真的删除行么', function(index){
+                        obj.del();
+                        deleteLab(data.id);
+                        layer.close(index);
+                    });
+                }else if (obj.event === 'equip') {
+                    localStorage.setItem("labName", data.labName);
+                    window.location.href = "/start/lab/user/equip/lab";
+                } else if (obj.event === 'edit') {
+                    localStorage.setItem("labName", data.labName);
+                    window.location.href = "/start/lab/occupy/user/infos";
+
+                }
+
+            });
+        });
+
+        //JavaScript代码区域
+
+        function load_data(){
+            var theme=localStorage.getItem("userName");
+            if(theme!=null||theme!=""){
+                $("#userName").html(theme);
+            }
+        }
+        function deleteLab(id) {
+            if (id != null) {
+                $.ajax({
+                    type:"POST",
+                    url:"/lab/delete",
+                    data: {
+                        id: id,
+                    },
+                    dataType:"json",
+                    success: function (msg) {
+                        if (msg.code != 0) {
+                            alert("删除失败");
+                        }
+                    }
+                });
+            }
+        }
+
+        layui.use('element', function(){
+            var element = layui.element;
+
+        });
+    </script>
+    <div class="layui-footer">
+        微机1603_刘常林 - NEAU实验室管理系统
+    </div>
+</div>
+
+<script>
+    function load_data(){
+        var theme=localStorage.getItem("userName");
+        if(theme!=null||theme!=""){
+            // $("#userName").show();
+            $("#userName").html(theme);
+        }
+    }
+    layui.use('element', function(){
+        var element = layui.element;
+
+    });
+</script>
+<script type="text/javascript">
+    var theme=localStorage.getItem("userName");
+    if(theme!=null||theme!=""){
+        $("#userName").html(theme);
+    }
+</script>
+
+</body>
+</html>

@@ -33,5 +33,21 @@
         from lab_log
         where occupy_id = #{occupyId}
     </select>
+    <select id="getAllLabLogByPageAndUser" resultType="com.lcl.labmanage.entity.LabLog">
+
+        SELECT
+        *
+        from lab_log
+        where user = #{name}
+        limit #{page},#{size}
+    </select>
+    <select id="getCountOfLabLogAndUser" parameterType="java.lang.String"
+            resultType="java.lang.Integer">
+        SELECT
+        count(*)
+        from lab_log
+        where user = #{name}
+
+    </select>
 
 </mapper>

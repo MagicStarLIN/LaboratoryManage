@@ -71,8 +71,11 @@
                 },
                 dataType:"json",
                 success: function (msg) {
-                    if (msg.code == 0) {
+                    if (msg.code == 0 && msg.data.role_name === "超级管理员") {
                         window.location.href = "/start/index/admin";
+                        localStorage.setItem("userName", username);
+                    } else if (msg.code == 0 && msg.data.role_name === "管理员") {
+                        window.location.href = "/start/index/user";
                         localStorage.setItem("userName", username);
                     } else {
                         alert("用户名不存在或密码错误");

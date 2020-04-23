@@ -12,7 +12,15 @@
     </select>
 
     <select id="selectUserByNameAndPassword" resultType="com.lcl.labmanage.entity.User">
-        select * from user where username = #{name} and password = #{password}
+        SELECT
+        u.id,
+        u.username,
+        u.password,
+        r.role_name
+        FROM user u
+        LEFT JOIN role r
+        ON u.role = r.id
+        where username = #{name} and password = #{password}
     </select>
 
     <select id="selectAllUser" resultType="java.lang.Integer">

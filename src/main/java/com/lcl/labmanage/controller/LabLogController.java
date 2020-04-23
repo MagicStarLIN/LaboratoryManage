@@ -27,10 +27,15 @@ public class LabLogController {
         return labLogService.getAllLabLog(page, limit);
     }
 
-
+    @GetMapping("/list/byname")
+    @ResponseBody
+    public Response getAllLabLogByUser(String name,Integer page, Integer limit) {
+        return labLogService.getAllLabLogByUserName(name, page, limit);
+    }
     @PostMapping("/delete")
     @ResponseBody
     public Response deleteLabLog(Integer id) {
+
         return labLogService.deleteLabLog(id);
     }
 

@@ -9,6 +9,8 @@ public interface LabLogMapper {
 
     List<LabLog> getAllLabLogByPage(@Param("page") Integer page, @Param("size") Integer size);
 
+    List<LabLog> getAllLabLogByPageAndUser(@Param("name")String name,@Param("page") Integer page, @Param("size") Integer size);
+
     Integer getCountOfLabLog();
 
     Boolean insertNewLabLog(LabLog labLog);
@@ -18,4 +20,6 @@ public interface LabLogMapper {
     LabLog getLabLogByOccupyId(Integer occupyId);
 
     Boolean updateLabLogById(@Param("id") Integer id, @Param("attendance") String attendance, @Param("device") String device);
+
+    Integer getCountOfLabLogAndUser(String name);
 }

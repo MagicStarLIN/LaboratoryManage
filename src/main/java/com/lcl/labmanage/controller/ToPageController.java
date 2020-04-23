@@ -3,8 +3,6 @@ package com.lcl.labmanage.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author liuchanglin
  * @version 1.0
@@ -78,5 +76,40 @@ public class ToPageController {
     @GetMapping("/exper/occupy")
     public String jumpToExperOccupy() {
         return "page/ALLlabOccupyInfos";
+    }
+
+    @GetMapping("/index/user")
+    public String jumpToIndexUser() {
+        return "userPage/indexUser";
+    }
+
+    @GetMapping("/lab/user/info")
+    public String jumpToLabInfoUser() {
+        return "userPage/labInfoUser";
+    }
+
+    @GetMapping("/lab/user/equip")
+    public String jumpToLabEquipUser() {
+        return "userPage/labEquipUser";
+    }
+
+    @GetMapping("/exper/occupy/user")
+    public String jumpToOccupyUser() {
+        return "userPage/labOccupyUser";
+    }
+
+    @GetMapping("/exper/log/user")
+    public String jumpToLabLogUser() {
+        return "userPage/labLogUser";
+    }
+
+    @GetMapping("/lab/occupy/user/infos")
+    public String jumpToLabOccupyInfosByLab() {
+        return "userPage/labOccupyInfoUser";
+    }
+
+    @GetMapping("/lab/user/equip/lab")
+    public String jumpToLabEquipUserByLab() {
+        return "userPage/labEquipUserByLab";
     }
 }

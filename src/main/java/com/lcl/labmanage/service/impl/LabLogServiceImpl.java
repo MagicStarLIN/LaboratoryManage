@@ -32,4 +32,10 @@ public class LabLogServiceImpl implements LabLogService {
         return Response.success(labLogMapper.updateLabLogById(id, attendance, device));
     }
 
+    @Override
+    public Response getAllLabLogByUserName(String name, Integer page, Integer limit) {
+        return Response.success(labLogMapper.getAllLabLogByPageAndUser(name,(page - 1) * limit, limit), labLogMapper.getCountOfLabLogAndUser(name));
+
+    }
+
 }

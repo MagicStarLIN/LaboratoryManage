@@ -8,4 +8,6 @@ public interface LabLogService {
     Response deleteLabLog(Integer id);
 
     Response editLabLog(Integer id, String attendance, String device);
+
+    Response getAllLabLogByUserName(String name, Integer page, Integer limit);
 }
