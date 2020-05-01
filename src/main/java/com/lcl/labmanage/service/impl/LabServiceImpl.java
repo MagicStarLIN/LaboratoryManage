@@ -33,7 +33,7 @@ public class LabServiceImpl implements LabService {
 
     @Override
     public Response deleteLab(Integer id) {
-        String lab = labMapper.getLabById(id).getLabName();
+        String lab = labMapper.getLabById(id).getLab();
         return Response.success(labMapper.deleteLab(id) && occupyInfoMapper.deleteRecordByLabName(lab));
     }
 
