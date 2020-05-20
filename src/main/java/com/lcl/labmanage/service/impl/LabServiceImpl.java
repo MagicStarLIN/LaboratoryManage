@@ -25,12 +25,26 @@ public class LabServiceImpl implements LabService {
     public Response getAllLabInfos(Integer page, Integer limit) {
         return Response.success(labMapper.getAllLabsByPage((page - 1) * limit, limit), labMapper.getCountOfLab());
     }
-
+    /**
+     * @Title addLab
+     * @Description 新增实验室
+     * @Author liuchanglin
+     * @Param [lab]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response addLab(Lab lab) {
         return Response.success(labMapper.addLab(lab));
     }
 
+    /**
+     * @Title deleteLab
+     * @Description 删除实验室
+     * @Author liuchanglin
+     * @Date 2020/5/3 1:32 上午
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response deleteLab(Integer id) {
         String lab = labMapper.getLabById(id).getLabName();

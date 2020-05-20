@@ -27,7 +27,13 @@ public class OccupyLabServiceImpl implements OccupyLabService {
     public Response getAllOccupyInfosByPage(Integer page, Integer limit) {
         return Response.success(occupyInfoMapper.getLabOccupyRecordByPage((page - 1) * limit, limit), occupyInfoMapper.getCountOfOccupyRecord());
     }
-
+    /**
+     * @Title getAllOccupyInfosByLabName
+     * @Description 根据实验室名称返回占用信息
+     * @Author liuchanglin
+     * @Param [labName]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response getAllOccupyInfosByLabName(String labName) {
         if (occupyInfoMapper.getLabOccupyRecordByName(labName).size() != 0) {
@@ -36,17 +42,32 @@ public class OccupyLabServiceImpl implements OccupyLabService {
             return Response.error(ResultCode.NULL_DATA.getCode(), ResultCode.NULL_DATA.getMsg());
         }
     }
-
+    /**
+     * @Title applyForLab
+     * @Description 申请占用实验室
+     * @Author liuchanglin
+     * @Param [labOccupyRecord]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response applyForLab(LabOccupyRecord labOccupyRecord) {
         labOccupyRecord.setState("待审批");
-        if (occupyInfoMapper.getCountOfOccupyInfosByTime(labOccupyRecord.getTerm(),labOccupyRecord.getLab(), labOccupyRecord.getEnd_week(),labOccupyRecord.getSpecific_time()) != 0) {
+        if (occupyInfoMapper.getCountOfOccupyInfosByTime(labOccupyRecord.getTerm(),
+                labOccupyRecord.getLab(),
+                labOccupyRecord.getEnd_week(),
+                labOccupyRecord.getSpecific_time()) != 0) {
             return Response.error(ResultCode.AREADY_OCCUPIED.getCode(), ResultCode.AREADY_OCCUPIED.getMsg());
         } else {
             return Response.success(occupyInfoMapper.insertNewOccupyRecord(labOccupyRecord));
         }
     }
-
+    /**
+     * @Title confirmApply
+     * @Description 审核申请
+     * @Author liuchanglin
+     * @Param [id, result]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response confirmApply(Integer id, String result) {
         LabOccupyRecord occupyRecord = occupyInfoMapper.getOccupyInfosById(id);

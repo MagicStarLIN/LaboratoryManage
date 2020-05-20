@@ -25,7 +25,14 @@ public class ReportServiceImpl implements ReportService {
     public Response getAllReportLogByPage(Integer page, Integer limit) {
         return Response.success(reportMapper.getAllRecordByPage((page - 1) * limit, limit), reportMapper.getCountOfRecord());
     }
-
+    /**
+     * @Title handleReport
+     * @Description 报备设备情况
+     * @Author liuchanglin
+     * @Date 2020/5/3 3:07 上午
+     * @Param [reportReq]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response handleReport(ReportReq reportReq) {
         Device currDevice = deviceMapper.getDeviceById(reportReq.getId());
@@ -44,8 +51,10 @@ public class ReportServiceImpl implements ReportService {
             //判断类别
             if ("报修".equals(reportReq.getCat())) {
                 //判断数量合法
-                if (reportReq.getAmount() > currDevice.getTotal_count() || reportReq.getAmount() > currDevice.getUsable_count()) {
-                    return Response.error(ResultCode.ILLEGAL_COUNT.getCode(), ResultCode.ILLEGAL_COUNT.getMsg());
+                if (reportReq.getAmount() > currDevice.getTotal_count()
+                        || reportReq.getAmount() > currDevice.getUsable_count()) {
+                    return Response.error(ResultCode.ILLEGAL_COUNT.getCode()
+                            , ResultCode.ILLEGAL_COUNT.getMsg());
                 } else {
                     currDevice.setBroken_count(currDevice.getBroken_count() + reportReq.getAmount());
                     currDevice.setUsable_count(currDevice.getUsable_count() - reportReq.getAmount());
@@ -58,12 +67,26 @@ public class ReportServiceImpl implements ReportService {
         }
         return Response.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
     }
-
+    /**
+     * @Title checkReport
+     * @Description 已读
+     * @Author liuchanglin
+     * @Date 2020/5/3 3:18 上午
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response checkReport(Integer id) {
         return Response.success(reportMapper.updateStateById("已受理", id));
     }
-
+    /**
+     * @Title finishReport
+     * @Description 完成报备
+     * @Author liuchanglin
+     * @Date 2020/5/3 3:18 上午
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response finishReport(Integer id){
         ReportRecord reportRecord = reportMapper.getRecordById(id);

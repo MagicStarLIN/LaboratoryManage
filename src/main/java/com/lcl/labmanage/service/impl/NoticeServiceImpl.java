@@ -26,12 +26,26 @@ public class NoticeServiceImpl implements NoticeService {
         return Response.success(noticeMapper.getAllNoticesByPage((page - 1) * limit, limit),
                 noticeMapper.getCountOfNotices());
     }
-
+    /**
+     * @Title getNoticeInfos
+     * @Description 返回公告详情
+     * @Author liuchanglin
+     * @Date 2020/5/3 1:12 上午
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response getNoticeInfos(Integer id) {
         return Response.success(noticeMapper.getNoticesById(id));
     }
 
+    /**
+     * @Title addNotice
+     * @Description 公告添加
+     * @Author liuchanglin
+     * @Param [title, content, publisher]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response addNotice(String title, String content, String publisher) {
         Notice notice = new Notice();
@@ -45,7 +59,13 @@ public class NoticeServiceImpl implements NoticeService {
             return Response.error(ResultCode.ERROR.getCode(), ResultCode.ERROR.getMsg());
         }
     }
-
+    /**
+     * @Title deleteNotice
+     * @Description 删除公告
+     * @Author liuchanglin
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response deleteNotice(Integer id) {
         return Response.success(noticeMapper.deleteNotice(id));

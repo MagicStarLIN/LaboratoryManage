@@ -39,13 +39,25 @@ public class LoginController {
     public Response userList(Integer page, Integer limit) {
         return personService.userList(page, limit);
     }
-
+    /**
+     * @Title updateRole
+     * @Description 权限编辑
+     * @Author liuchanglin
+     * @Param [id, role]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @PostMapping("/update/role")
     @ResponseBody
     public Response updateRole(Integer id, Integer role) {
         return personService.updateRole(id, role);
     }
-
+    /**
+     * @Title deleteUser
+     * @Description 删除用户
+     * @Author liuchanglin
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @PostMapping("/delete")
     @ResponseBody
     public Response deleteUser(Integer id) {

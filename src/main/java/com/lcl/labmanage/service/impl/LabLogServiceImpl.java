@@ -21,12 +21,26 @@ public class LabLogServiceImpl implements LabLogService {
     public Response getAllLabLog(Integer page, Integer limit) {
         return Response.success(labLogMapper.getAllLabLogByPage((page - 1) * limit, limit), labLogMapper.getCountOfLabLog());
     }
-
+    /**
+     * @Title deleteLabLog
+     * @Description 删除日志
+     * @Author liuchanglin
+     * @Date 2020/5/3 3:36 上午
+     * @Param [id]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response deleteLabLog(Integer id) {
         return Response.success(labLogMapper.deleteLabLog(id));
     }
-
+    /**
+     * @Title editLabLog
+     * @Description 填写日志
+     * @Author liuchanglin
+     * @Date 2020/5/3 3:27 上午
+     * @Param [id, attendance, device]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response editLabLog(Integer id, String attendance, String device) {
         return Response.success(labLogMapper.updateLabLogById(id, attendance, device));

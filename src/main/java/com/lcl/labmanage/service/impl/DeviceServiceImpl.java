@@ -25,7 +25,13 @@ public class DeviceServiceImpl implements DeviceService {
 
         return Response.success(deviceMapper.getAllDeviceByPage((page - 1) * limit, limit), deviceMapper.getCountOfDevice());
     }
-
+    /**
+     * @Title addDevice
+     * @Description 新增设备
+     * @Author liuchanglin
+     * @Param [device]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response addDevice(Device device) {
         device.setUpdatetime(DateUtils.getCurrentTime());
@@ -38,13 +44,28 @@ public class DeviceServiceImpl implements DeviceService {
         }
         return Response.success(deviceMapper.addDevice(device));
     }
-
+    /**
+     * @Title getLabDevice
+     * @Description 返回对应实验室下设备信息
+     * @Author liuchanglin
+     * @Date 2020/5/3 1:47 上午
+     * @Param [name, page, limit]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response getLabDevice(String name, Integer page, Integer limit) {
-
-        return Response.success(deviceMapper.getAllDeviceByPageAndLab(name,(page - 1) * limit, limit),deviceMapper.getCountOfDeviceByLab(name));
+        return Response.success(
+                deviceMapper.getAllDeviceByPageAndLab(name,
+                        (page - 1) * limit, limit),
+                deviceMapper.getCountOfDeviceByLab(name));
     }
-
+    /**
+     * @Title getAllDevicesByParams
+     * @Description 根据日期或设备名称查询
+     * @Author liuchanglin
+     * @Param [purchase_date, equipment_name]
+     * @return com.lcl.labmanage.entity.Response
+     **/
     @Override
     public Response getAllDevicesByParams(String purchase_date, String equipment_name) {
         System.err.println(purchase_date + equipment_name);
@@ -54,7 +75,8 @@ public class DeviceServiceImpl implements DeviceService {
         if ("".equals(equipment_name)) {
             equipment_name = null;
         }
-        return Response.success(deviceMapper.getDevicesByParams(purchase_date,equipment_name),deviceMapper.getCountOfDeviceByParams(purchase_date,equipment_name));
+        return Response.success(deviceMapper.getDevicesByParams(purchase_date,equipment_name),
+                deviceMapper.getCountOfDeviceByParams(purchase_date,equipment_name));
     }
 
 }
