@@ -12,7 +12,7 @@ import lombok.Data;
 public class Lab {
 
     private Integer id;
-    private String labName;
+    private String lab;
     private String administrator;
     private String admin_contact;
     private String location;

@@ -21,9 +21,9 @@
     </select>
 
     <insert id="addLab" parameterType="com.lcl.labmanage.entity.Lab">
-        insert into lab_infos(labname,administrator,admin_contact,location)
+        insert into lab_infos(lab,administrator,admin_contact,location)
         values
-        (#{labName},#{administrator},#{admin_contact},#{location})
+        (#{lab},#{administrator},#{admin_contact},#{location})
     </insert>
 
     <delete id="deleteLab">
@@ -31,7 +31,7 @@
     </delete>
 
     <select id="getAllLabName" resultType="java.lang.String">
-        select labname from lab_infos
+        select lab from lab_infos
     </select>
 
 </mapper>
