@@ -116,7 +116,7 @@
                     [
                         {type: 'checkbox', fixed: 'left'}
                         ,{field:'id',  title: 'ID', sort: true}
-                        ,{field:'lab', title: '实验室'}
+                        ,{field:'labname', title: '实验室'}
                         ,{field:'administrator', title: '管理员', sort: true}
                         ,{field:'admin_contact', title: '管理员联系方式', sort: true}
                         ,{field:'location', title: '地点', sort: true}
@@ -159,10 +159,10 @@
                         layer.close(index);
                     });
                 }else if (obj.event === 'equip') {
-                    localStorage.setItem("labName", data.labName);
+                    localStorage.setItem("labName", data.labname);
                     window.location.href = "/start/lab/equip/lab";
                 } else if (obj.event === 'edit') {
-                    localStorage.setItem("labName", data.labName);
+                    localStorage.setItem("labName", data.labname);
                     window.location.href = "/start/lab/occupy/infos";
                 }
 

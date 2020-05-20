@@ -165,7 +165,7 @@
                         ,area: ['800px', '800px']
                         ,btn: ['确定', '取消']
                         ,yes: function(layero){
-                            if (isNotNullField()) {
+                            if (judageIsNotNull()) {
                                 let attendance = $('#attendacne').val();
                                 let device = $('#device_condition').val()
                                 $.ajax({
