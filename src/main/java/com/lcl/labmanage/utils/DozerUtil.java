@@ -7,8 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * @author :dongshuo
- * @date : 2019/2/11 17:36
+ * @author :liuchanglin
  * @desc :
  */
 public class DozerUtil {
