@@ -7,8 +7,6 @@ import java.util.Optional;
 /**
  * Response data transfer object wrapping
  *
- * @author tianchanglian
- * @date 2019/08/16
  */
 public class Response<T> implements Serializable {
     /**
